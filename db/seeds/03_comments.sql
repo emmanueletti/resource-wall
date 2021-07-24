@@ -1,0 +1,54 @@
+-- data from https://www.mockaroo.com/
+-- 50 records
+
+insert into comments (user_id, content) values (2, 'Vivamus in felis eu sapien cursus vestibulum. Proin eu mi.');
+insert into comments (user_id, content) values (5, 'Duis bibendum.');
+insert into comments (user_id, content) values (5, 'Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.');
+insert into comments (user_id, content) values (3, 'Pellentesque at nulla.');
+insert into comments (user_id, content) values (6, 'Pellentesque at nulla.');
+insert into comments (user_id, content) values (6, 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum.');
+insert into comments (user_id, content) values (2, 'Aenean lectus. Pellentesque eget nunc.');
+insert into comments (user_id, content) values (1, 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy.');
+insert into comments (user_id, content) values (1, 'Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.');
+insert into comments (user_id, content) values (6, 'Proin eu mi.');
+insert into comments (user_id, content) values (1, 'Etiam faucibus cursus urna. Ut tellus.');
+insert into comments (user_id, content) values (5, 'In congue. Etiam justo.');
+insert into comments (user_id, content) values (2, 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.');
+insert into comments (user_id, content) values (2, 'Morbi non lectus.');
+insert into comments (user_id, content) values (5, 'Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.');
+insert into comments (user_id, content) values (2, 'Phasellus sit amet erat. Nulla tempus.');
+insert into comments (user_id, content) values (2, 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.');
+insert into comments (user_id, content) values (4, 'Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.');
+insert into comments (user_id, content) values (1, 'Proin eu mi.');
+insert into comments (user_id, content) values (4, 'Praesent id massa id nisl venenatis lacinia.');
+insert into comments (user_id, content) values (2, 'Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.');
+insert into comments (user_id, content) values (3, 'Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.');
+insert into comments (user_id, content) values (5, 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.');
+insert into comments (user_id, content) values (2, 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.');
+insert into comments (user_id, content) values (3, 'Vivamus vel nulla eget eros elementum pellentesque.');
+insert into comments (user_id, content) values (2, 'Phasellus in felis. Donec semper sapien a libero.');
+insert into comments (user_id, content) values (4, 'Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.');
+insert into comments (user_id, content) values (1, 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.');
+insert into comments (user_id, content) values (3, 'Suspendisse accumsan tortor quis turpis. Sed ante.');
+insert into comments (user_id, content) values (1, 'Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia.');
+insert into comments (user_id, content) values (6, 'Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.');
+insert into comments (user_id, content) values (4, 'Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.');
+insert into comments (user_id, content) values (5, 'Duis mattis egestas metus.');
+insert into comments (user_id, content) values (6, 'Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.');
+insert into comments (user_id, content) values (5, 'Maecenas tincidunt lacus at velit.');
+insert into comments (user_id, content) values (3, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis.');
+insert into comments (user_id, content) values (5, 'Suspendisse potenti. Nullam porttitor lacus at turpis.');
+insert into comments (user_id, content) values (1, 'Cras in purus eu magna vulputate luctus.');
+insert into comments (user_id, content) values (5, 'Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.');
+insert into comments (user_id, content) values (3, 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo.');
+insert into comments (user_id, content) values (3, 'Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.');
+insert into comments (user_id, content) values (3, 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.');
+insert into comments (user_id, content) values (4, 'Pellentesque at nulla. Suspendisse potenti.');
+insert into comments (user_id, content) values (1, 'Praesent blandit lacinia erat.');
+insert into comments (user_id, content) values (6, 'Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.');
+insert into comments (user_id, content) values (3, 'Nam nulla.');
+insert into comments (user_id, content) values (3, 'Vestibulum ac est lacinia nisi venenatis tristique.');
+insert into comments (user_id, content) values (1, 'Nulla ac enim.');
+insert into comments (user_id, content) values (2, 'Donec dapibus.');
+insert into comments (user_id, content) values (2, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus.');
+
