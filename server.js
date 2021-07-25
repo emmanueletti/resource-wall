@@ -25,7 +25,7 @@ app.use(
   session({
     name: "session",
     keys: ["key1", "key2"],
-  }),
+  })
 );
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -37,7 +37,7 @@ app.use(
     dest: `${__dirname}/public/styles`,
     debug: true,
     outputStyle: "expanded",
-  }),
+  })
 );
 app.use(express.static("public"));
 
@@ -47,6 +47,9 @@ const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const accessCtrl = require("./routes/access");
 const resRoutes = require("./routes/resources");
+const catRoutes = require("./routes/categories");
+const catResRoutes = require("./routes/categories_resources");
+const commentsRoutes = require("./routes/comments");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -54,6 +57,9 @@ app.use("/", accessCtrl(db));
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/resources", resRoutes(db));
+app.use("/api/categories", catRoutes(db));
+app.use("/api/categories_resources", catResRoutes(db));
+app.use("/api/comments", commentsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
