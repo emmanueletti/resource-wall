@@ -28,7 +28,7 @@
       <form action="#">
         <input
           class="nav__search-bar"
-           placeholder="Search for other users, find their resources..."
+          placeholder="Search for other users, find their resources..."
           type="search"
         />
         <button type="submit"><i class="fas fa-search"></i></button>
@@ -40,13 +40,15 @@
     </nav>
     <div class="nav__dropdown-menu">
       <ul>
-        <li>My Collection</li>
+        <li id="user-collection">My Collection</li>
         <li>Create New Category</li>
         <li>Logout</li>
       </ul>
     </div>
+
     <!-- main body container -->
     <main class="container">
+      <!--  -->
       <!-- "My Collection" Layout -->
       <div class="collection">
         <!-- user card -->
@@ -64,124 +66,173 @@
         <div class="created-resources">
           <h2>Resources Created</h2>
 
-          <div class="resources" >
+          <div class="resources">
             <!-- test card -->
             <div class="resource-card">
               <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/800x800/?travel" alt="">
+                <img
+                  src="https://source.unsplash.com/random/800x800/?travel"
+                  alt=""
+                />
               </div>
-                <h3 class="resource__card--title">Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
+              <h3 class="resource__card--title">Lorem Ipsum</h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
               </div>
+              <a href="#">Expand</a>
+            </div>
 
-              <!-- test card -->
+            <!-- test card -->
             <div class="resource-card">
               <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/1000x1000/?travel" alt="">
+                <img
+                  src="https://source.unsplash.com/random/1120x1120/?travel"
+                  alt=""
+                />
               </div>
-                <h3 class="resource__card--title">Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
+              <h3 class="resource__card--title">
+                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+              </h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
               </div>
+              <a href="#">Expand</a>
+            </div>
 
-              <!-- test card -->
+            <!-- test card -->
             <div class="resource-card">
               <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/1120x1120/?travel" alt="">
+                <img
+                  src="https://source.unsplash.com/random/1020x1020/?travel"
+                  alt=""
+                />
               </div>
-                <h3 class="resource__card--title">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
+              <h3 class="resource__card--title">
+                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+              </h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
               </div>
+              <a href="#">Expand</a>
+            </div>
 
-               <!-- test card -->
+            <!-- test card -->
             <div class="resource-card">
               <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/1119x1119/?travel" alt="">
+                <img
+                  src="https://source.unsplash.com/random/1119x1119/?travel"
+                  alt=""
+                />
               </div>
-                <h3 class="resource__card--title">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
+              <h3 class="resource__card--title">
+                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+              </h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
               </div>
-
-               <!-- test card -->
-            <div class="resource-card">
-              <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/1122x1122/?travel" alt="">
-              </div>
-                <h3 class="resource__card--title">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
-              </div>
-
-               <!-- test card -->
-            <div class="resource-card">
-              <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/1121x1121/?travel" alt="">
-              </div>
-                <h3 class="resource__card--title">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
-              </div>
-
-              <!-- test card -->
-            <div class="resource-card">
-              <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/1123x1123/?travel" alt="">
-              </div>
-                <h3 class="resource__card--title">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
-              </div>
-
-              <!-- test card -->
-            <div class="resource-card">
-              <div class="resource-card__image">
-                <img src="https://source.unsplash.com/random/1125x1125/?travel" alt="">
-              </div>
-                <h3 class="resource__card--title">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</h3>
-                <div class="resource-card__icons">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <i class="fas fa-comment-alt"></i>
-                </div>
-              </div>
-
+              <a href="#">Expand</a>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- liked resources -->
+        <!-- LIKED resources -->
         <div class="liked-resources">
           <h2>Resources Liked</h2>
+
+          <div class="resources">
+            <!-- test card -->
+            <div class="resource-card">
+              <div class="resource-card__image">
+                <img
+                  src="https://source.unsplash.com/random/1122x1122/?travel"
+                  alt=""
+                />
+              </div>
+              <h3 class="resource__card--title">
+                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+              </h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
+              </div>
+              <a href="#">Expand</a>
+            </div>
+
+            <!-- test card -->
+            <div class="resource-card">
+              <div class="resource-card__image">
+                <img
+                  src="https://source.unsplash.com/random/1121x1121/?travel"
+                  alt=""
+                />
+              </div>
+              <h3 class="resource__card--title">
+                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+              </h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
+              </div>
+              <a href="#">Expand</a>
+            </div>
+
+            <!-- test card -->
+            <div class="resource-card">
+              <div class="resource-card__image">
+                <img
+                  src="https://source.unsplash.com/random/1123x1123/?travel"
+                  alt=""
+                />
+              </div>
+              <h3 class="resource__card--title">
+                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+              </h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
+              </div>
+              <a href="#">Expand</a>
+            </div>
+
+            <!-- test card -->
+            <div class="resource-card">
+              <div class="resource-card__image">
+                <img
+                  src="https://source.unsplash.com/random/1130x1130/?travel"
+                  alt=""
+                />
+              </div>
+              <h3 class="resource__card--title">
+                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+              </h3>
+              <div class="resource-card__icons">
+                <i class="far fa-heart"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="fas fa-comment-alt"></i>
+              </div>
+              <a href="#">Expand</a>
+            </div>
+
+            <!-- end of collection container -->
+          </div>
         </div>
       </div>
     </main>
 
     <!-- external js -->
     <script src="./vendor/jquery-3.0.0.js"></script>
+    <!-- internal js -->
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
