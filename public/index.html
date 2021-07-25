@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- external styles -->
+    <link rel="stylesheet" href="./vendor/border-box.css" />
+    <link rel="stylesheet" href="./vendor/normalize-4.1.1.css" />
+
+    <!-- font awesome -->
+    <script
+      src="https://kit.fontawesome.com/02d378a582.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- internal css -->
+    <link rel="stylesheet" href="./styles/layout.css" />
+
+    <title>Resource Wall</title>
+  </head>
+  <body>
+    <!-- navigation bar -->
+    <nav>
+      <h3 class="logo">Resourcify</h3>
+      <a href="#"> Explore </a>
+      <form action="#">
+        <input
+          class="nav__search-bar"
+          placeholder="Search for other users, find their resources..."
+          type="text"
+        />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+      <a href="#" class="nav__cta">Create New</a>
+      <div class="nav__dropdown-icon">
+        <i class="fas fa-angle-double-down"></i>
+      </div>
+    </nav>
+    <div class="nav__dropdown-menu">
+      <ul>
+        <li>My Collection</li>
+        <li>Create New Category</li>
+        <li>Logout</li>
+      </ul>
+    </div>
+    <!-- main body container -->
+    <main class="container">
+      <!-- "My Collection" Layout -->
+      <div class="collection">
+        <!-- user card -->
+        <div class="user-card">
+          <div class="user-card__image">🗄</div>
+          <div class="user-card__body">
+            <h1 class="user-card__name">John Doe</h1>
+            <p class="user-card__bio"><span>28</span> Resources Created</p>
+            <p>.</p>
+            <p class="user-card__bio"><span>150</span> Resources Liked</p>
+          </div>
+        </div>
+
+        <!-- saved resources -->
+        <div class="saved-resources">
+          <h2>Resources Saved</h2>
+
+          <div class="resources" ></div>
+        </div>
+      </div>
+
+      <!-- liked resources -->
+        <div class="liked-resources">
+          <h2>Resources Liked</h2>
+        </div>
+      </div>
+    </main>
+
+    <!-- external js -->
+    <script src="./vendor/jquery-3.0.0.js"></script>
+  </body>
+</html>
