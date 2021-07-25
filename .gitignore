@@ -4,3 +4,4 @@ public/styles
 .vscode/
 *.log
 *.sqlite3
+*.session.sql

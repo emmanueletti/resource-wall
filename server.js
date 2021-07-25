@@ -50,6 +50,8 @@ const resRoutes = require("./routes/resources");
 const catRoutes = require("./routes/categories");
 const catResRoutes = require("./routes/categories_resources");
 const commentsRoutes = require("./routes/comments");
+const ratRoutes = require("./routes/ratings");
+const likeRoutes = require("./routes/likes");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -60,6 +62,8 @@ app.use("/api/resources", resRoutes(db));
 app.use("/api/categories", catRoutes(db));
 app.use("/api/categories_resources", catResRoutes(db));
 app.use("/api/comments", commentsRoutes(db));
+app.use("/api/ratings", ratRoutes(db));
+app.use("/api/likes", likeRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page

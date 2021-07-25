@@ -15,6 +15,12 @@ module.exports = (db) => {
       .then((data) => res.json(data.rows))
       .catch((e) => res.status(500).json({ error: e.message }));
   });
+  router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    db.query("SELECT * FROM resources WHERE resources.id = $1", [id])
+      .then((data) => res.json(data.rows))
+      .catch((e) => res.status(500).json({ error: e.message }));
+  });
   router.post("/", (req, res) => {
     const { user_id } = req.session;
     const { url, title, description } = req.body;
