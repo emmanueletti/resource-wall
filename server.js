@@ -25,7 +25,7 @@ app.use(
   session({
     name: "session",
     keys: ["key1", "key2"],
-  })
+  }),
 );
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -37,7 +37,7 @@ app.use(
     dest: `${__dirname}/public/styles`,
     debug: true,
     outputStyle: "expanded",
-  })
+  }),
 );
 app.use(express.static("public"));
 
@@ -52,10 +52,12 @@ const catResRoutes = require("./routes/categories_resources");
 const commentsRoutes = require("./routes/comments");
 const ratRoutes = require("./routes/ratings");
 const likeRoutes = require("./routes/likes");
+const myWallRoutes = require("./routes/mywall");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/", accessCtrl(db));
+app.use("/mywall", myWallRoutes(db));
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/resources", resRoutes(db));

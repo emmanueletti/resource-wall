@@ -10,3 +10,8 @@
 - What should POST requests return?
 - Do we need GET responses for POST endpoints?
 - How exactly should GET requests return data (joined, split, array of IDs for comments etc.)
+- Is there a need for `/me` in `/resources`, `/likes`, and `/comments`?
+
+## TODO
+
+- [ ] Detailed API map

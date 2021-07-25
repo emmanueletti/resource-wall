@@ -38,8 +38,7 @@ describe("server", () => {
         .get("/api/resources/42")
         .expect(200)
         .expect((res) => {
-          if (res.body[0].id !== 42 || !res.body[0].url)
-            throw new Error("FAIL");
+          if (res.body[0].id !== 42 || !res.body[0].url) throw new Error("FAIL");
         })
         .end(done);
     });
@@ -51,8 +50,7 @@ describe("server", () => {
         .send({ name: "Example Category" })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].name !== "Example Category")
-            throw new Error("Assertion failed");
+          if (res.body[0].name !== "Example Category") throw new Error("Assertion failed");
         })
         .end(done);
     });
@@ -64,8 +62,7 @@ describe("server", () => {
         .send({ category_id: 2, resource_id: 42 })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].resource_id !== 42)
-            throw new Error("Assertion failed");
+          if (res.body[0].resource_id !== 42) throw new Error("Assertion failed");
         })
         .end(done);
     });
@@ -77,8 +74,7 @@ describe("server", () => {
         .send({ resource_id: 42, content: "funky" })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].content !== "funky" || res.body[0].user_id !== 1)
-            throw new Error("FAIL");
+          if (res.body[0].content !== "funky" || res.body[0].user_id !== 1) throw new Error("FAIL");
         })
         .end(done);
     });
@@ -99,8 +95,7 @@ describe("server", () => {
         .send({ resource_id: 42, value: 3 })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].user_id !== 1 || res.body[0].value !== 3)
-            throw new Error("FAIL");
+          if (res.body[0].user_id !== 1 || res.body[0].value !== 3) throw new Error("FAIL");
         })
         .end(done);
     });
@@ -110,7 +105,20 @@ describe("server", () => {
       agent
         .get("/api/likes/search?u=5")
         .expect(200)
-        .expect((res) => {})
+        .expect((res) => {
+          if (!Array.isArray(res.body) || res.body[0].user_id !== 5) throw new Error("FAIL");
+        })
+        .end(done);
+    });
+  });
+  describe("/mywall", () => {
+    it("returns a list of created and liked resources for the logged-in user", (done) => {
+      agent
+        .get("/mywall")
+        .expect(200)
+        .expect((res) => {
+          if (!Array.isArray(res.body)) throw new Error("FAIL");
+        })
         .end(done);
     });
   });
