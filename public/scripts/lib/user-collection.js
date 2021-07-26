@@ -168,11 +168,11 @@ const renderCollectionPage = () => {
 
   // 1 - ajax call for data
   // -> get logged in users data
-  //    GET users/:id
+  //    GET user (id stored in cookies)
   // -> get logged in users created resources
-  //    GET users/:id/resources
+  //    GET user/resource
   // -> get logged in users liked resources
-  //    GET users/:id/resources/liked
+  //    GET user/
 
   // 2 - fill main collections div with content
   // USER CARD
