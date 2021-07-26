@@ -8,11 +8,6 @@ $(document).ready(() => {
 
   $("#user-collection").click((e) => {
     e.preventDefault();
-    //
-    // my collection page
-    // 1-get data
-    getCollectionPage();
-    // 2-build page components
-    // 3-render page
+    renderCollectionPage();
   });
 });

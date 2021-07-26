@@ -67,6 +67,50 @@ const buildUserCard = (fakeUserData) => {
   return userCardDiv;
 };
 
+buildResourceCard = (container, resource) => {
+  // generate random number between 1000 and 2000 so unsplash image is unique for each card
+  let imgDimensions = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
+  const resourceCardImg = document.createElement("img");
+  resourceCardImg.setAttribute(
+    "src",
+    `https://source.unsplash.com/random/${imgDimensions}x${imgDimensions}/?${
+      resource.category || "travel"
+    }`
+  );
+  const resourceCardImgDiv = document.createElement("div");
+  resourceCardImgDiv.className = "resource-card__image";
+  resourceCardImgDiv.appendChild(resourceCardImg);
+
+  const resourceCardTitleH3 = document.createElement("h3");
+  resourceCardTitleH3.className = "resource__card-title";
+  const resourceCardTitle = document.createTextNode(resource.title);
+  resourceCardTitleH3.appendChild(resourceCardTitle);
+
+  const resourceCardIcons = document.createElement("div");
+  resourceCardIcons.classList = "resource-card__icons";
+  resourceCardIcons.innerHTML = `
+    <i class="far fa-heart"></i>
+    <i class="fas fa-star-half-alt"></i>
+    <i class="fas fa-comment-alt"></i>
+  `;
+
+  const resourceCardBtn = document.createElement("a");
+  resourceCardBtn.setAttribute("href", "#");
+  const resourceCardBtnText = document.createTextNode("Expand");
+  resourceCardBtn.appendChild(resourceCardBtnText);
+
+  // assemble resource card
+  const resourceCardDiv = document.createElement("div");
+  resourceCardDiv.className = "resource-card";
+  resourceCardDiv.id = `${resource.id}`;
+  resourceCardDiv.appendChild(resourceCardImgDiv);
+  resourceCardDiv.appendChild(resourceCardTitleH3);
+  resourceCardDiv.appendChild(resourceCardIcons);
+  resourceCardDiv.appendChild(resourceCardBtn);
+
+  container.appendChild(resourceCardDiv);
+};
+
 buildCreatedResources = (fakeResourceData) => {
   // title
   const createdResourcesCollectionTitle = document.createElement("h2");
@@ -78,48 +122,9 @@ buildCreatedResources = (fakeResourceData) => {
   const resourcesContainer = document.createElement("div");
   resourcesContainer.classList = "resources";
 
-  // resource cards
-
+  // build inidividual resource cards
   fakeResourceData.forEach((resource) => {
-    // generate random number between 1000 and 2000 so unsplash image is unique for each card
-    let imgDimensions = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
-    const resourceCardImg = document.createElement("img");
-    resourceCardImg.setAttribute(
-      "src",
-      `https://source.unsplash.com/random/${imgDimensions}x${imgDimensions}/?${resource.category}`
-    );
-    const resourceCardImgDiv = document.createElement("div");
-    resourceCardImgDiv.className = "resource-card__image";
-    resourceCardImgDiv.appendChild(resourceCardImg);
-
-    const resourceCardTitleH3 = document.createElement("h3");
-    resourceCardTitleH3.className = "resource__card-title";
-    const resourceCardTitle = document.createTextNode(resource.title);
-    resourceCardTitleH3.appendChild(resourceCardTitle);
-
-    const resourceCardIcons = document.createElement("div");
-    resourceCardIcons.classList = "resource-card__icons";
-    resourceCardIcons.innerHTML = `
-    <i class="far fa-heart"></i>
-    <i class="fas fa-star-half-alt"></i>
-    <i class="fas fa-comment-alt"></i>
-  `;
-
-    const resourceCardBtn = document.createElement("a");
-    resourceCardBtn.setAttribute("href", "#");
-    const resourceCardBtnText = document.createTextNode("Expand");
-    resourceCardBtn.appendChild(resourceCardBtnText);
-
-    // assemble resource card
-    const resourceCardDiv = document.createElement("div");
-    resourceCardDiv.className = "resource-card";
-    resourceCardDiv.id = `${resource.id}`;
-    resourceCardDiv.appendChild(resourceCardImgDiv);
-    resourceCardDiv.appendChild(resourceCardTitleH3);
-    resourceCardDiv.appendChild(resourceCardIcons);
-    resourceCardDiv.appendChild(resourceCardBtn);
-
-    resourcesContainer.appendChild(resourceCardDiv);
+    buildResourceCard(resourcesContainer, resource);
   });
 
   const createdResourcesCollection = document.createElement("div");
@@ -129,21 +134,53 @@ buildCreatedResources = (fakeResourceData) => {
   return createdResourcesCollection;
 };
 
-const getCollectionPage = () => {
-  // clear the page
+buildLikedResources = (fakeResourceData) => {
+  // title
+  const likedResourcesCollectionTitle = document.createElement("h2");
+  likedResourcesCollectionTitle.appendChild(
+    document.createTextNode("Resources Liked")
+  );
+
+  // container for resource cards
+  const resourcesContainer = document.createElement("div");
+  resourcesContainer.classList = "resources";
+
+  // build inidividual resource cards
+  fakeResourceData.forEach((resource) => {
+    buildResourceCard(resourcesContainer, resource);
+  });
+
+  const likedResourcesCollection = document.createElement("div");
+  likedResourcesCollection.classList = "liked-resources";
+  likedResourcesCollection.appendChild(likedResourcesCollectionTitle);
+  likedResourcesCollection.appendChild(resourcesContainer);
+  return likedResourcesCollection;
+};
+
+const renderCollectionPage = () => {
+  // empty pages container
   $(".container").empty();
 
-  // build div for collections content
+  // create main div for collections content
   const collectionDiv = document.createElement("div");
   collectionDiv.className = "collection";
   $(".container").append(collectionDiv);
 
-  // 1-get data
-  //  -> ajax call to back end route
+  // 1 - ajax call for data
+  // -> get logged in users data
+  //    GET users/:id
+  // -> get logged in users created resources
+  //    GET users/:id/resources
+  // -> get logged in users liked resources
+  //    GET users/:id/resources/liked
 
-  // 2-build and render page components
+  // 2 - fill main collections div with content
   // USER CARD
   collectionDiv.appendChild(buildUserCard(fakeUserData));
   // RESOURCES CREATED
   collectionDiv.appendChild(buildCreatedResources(fakeResourceData));
+  // RESOURCES LIKED
+  collectionDiv.appendChild(buildLikedResources(fakeResourceData));
+
+  // 3 - load event listeners
 };
