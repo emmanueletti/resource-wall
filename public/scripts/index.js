@@ -6,7 +6,8 @@ $(document).ready(() => {
     $(".nav__dropdown-menu").slideToggle();
   });
 
-  $("#user-collection").click(() => {
+  $("#user-collection").click((e) => {
+    e.preventDefault();
     //
     // my collection page
     // 1-get data
