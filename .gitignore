@@ -1,5 +1,7 @@
 node_modules/
 public/styles
 .env
+.vscode/
 *.log
 *.sqlite3
+*.session.sql
