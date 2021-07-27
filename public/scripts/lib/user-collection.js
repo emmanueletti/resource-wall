@@ -1,17 +1,3 @@
-// const fakeUserData = {
-//   id: 1,
-//   name: "Clark Kent",
-//   total_created_resources: 30,
-//   total_liked_resources: 40,
-// };
-
-const fakeResourceData = [
-  { id: 1, title: "Lorem Ipsum", category: "travel" },
-  { id: 2, title: "Lorem Ipsum", category: "travel" },
-  { id: 3, title: "Lorem Ipsum", category: "travel" },
-  { id: 4, title: "Lorem Ipsum", category: "travel" },
-];
-
 const buildUserCard = (data) => {
   // user card - user name
   const userCardName = document.createElement("h1");
@@ -111,7 +97,7 @@ const buildResourceCard = (container, resource) => {
   container.appendChild(resourceCardDiv);
 };
 
-const buildCreatedResources = (fakeResourceData) => {
+const buildCreatedResources = (data) => {
   // title
   const createdResourcesCollectionTitle = document.createElement("h2");
   createdResourcesCollectionTitle.appendChild(
@@ -123,7 +109,7 @@ const buildCreatedResources = (fakeResourceData) => {
   resourcesContainer.classList = "resources";
 
   // build inidividual resource cards
-  fakeResourceData.forEach((resource) => {
+  data.forEach((resource) => {
     buildResourceCard(resourcesContainer, resource);
   });
 
@@ -133,6 +119,8 @@ const buildCreatedResources = (fakeResourceData) => {
   createdResourcesCollection.appendChild(resourcesContainer);
   return createdResourcesCollection;
 };
+
+//
 
 const buildLikedResources = (fakeResourceData) => {
   // title
@@ -166,61 +154,55 @@ const renderCollectionPage = () => {
   collectionDiv.className = "collection";
   $(".container").append(collectionDiv);
 
-  // 1 - set cookies for logged in user (user 3)
-  $.get("/login/2").then(() => {
-    // get "logged in" user's info
-    const promiseA = $.get("api/userinfo");
-    const promiseB = $.get("/mywall");
-    Promise.all([promiseA, promiseB]).then(([dataA, dataB]) => {
-      console.log(dataA, dataB);
-      const usersName = dataA[0].name;
+  // get "logged in" user's info
+  const promiseA = $.get("api/userinfo");
+  const promiseB = $.get("/mywall");
+  Promise.all([promiseA, promiseB]).then(([dataA, dataB]) => {
+    console.log("returned user data: ", dataA);
+    console.log("returned users resources: ", dataB);
+    const usersName = dataA[0].name;
 
-      // users created resourses data
-      const createdResources = dataB.filter((el) => {
-        if (el["auth_name"] === usersName) {
-          return el;
-        }
-      });
-
-      // render resources created
-      if (!createdResources.length) {
-        collectionDiv.innerHTML =
-          "<h1 style='text-align:center'> No Resources Created </h1>";
-      } else {
-        collectionDiv.appendChild(buildCreatedResources(createdResources));
+    // users created resourses data
+    const createdResources = dataB.filter((el) => {
+      if (el["auth_name"] === usersName) {
+        return el;
       }
-
-      // liked resources data
-      const likedResources = dataB.filter((el) => {
-        if (el["auth_name"] !== usersName) {
-          return el;
-        }
-      });
-
-      // render liked resources
-      if (likedResources.length) {
-        collectionDiv.appendChild(buildLikedResources(likedResources));
-      }
-
-      const userData = {
-        id: dataA[0].id,
-        name: dataA[0].name,
-        total_created_resources: createdResources.length,
-        total_liked_resources: likedResources.length,
-      };
-
-      collectionDiv.prepend(buildUserCard(userData));
     });
-  });
 
-  // 3 - load event listeners
-  $(".resources").click((e) => {
-    const card = e.target.closest(".resource-card");
-    if (!card) {
-      return;
+    // render resources created
+    if (createdResources.length) {
+      collectionDiv.appendChild(buildCreatedResources(createdResources));
     }
 
-    // if clicked - render page for individual resource
-    renderResourcePage();
+    // liked resources data
+    const likedResources = dataB.filter((el) => {
+      if (el["auth_name"] !== usersName) {
+        return el;
+      }
+    });
+
+    // render liked resources
+    if (likedResources.length) {
+      collectionDiv.appendChild(buildLikedResources(likedResources));
+    }
+
+    const userData = {
+      id: dataA[0].id,
+      name: dataA[0].name,
+      total_created_resources: createdResources.length,
+      total_liked_resources: likedResources.length,
+    };
+
+    collectionDiv.prepend(buildUserCard(userData));
+
+    // 3 - load event listeners
+    $(".resources").click((e) => {
+      const card = e.target.closest(".resource-card");
+      if (!card) {
+        return;
+      }
+      // if clicked - render page for individual resource
+      renderResourcePage();
+    });
   });
 };

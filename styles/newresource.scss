@@ -1,0 +1,57 @@
+$background-color: #ffffff;
+$primary-color: #e60024;
+$primary-color-dark: rgb(153, 0, 0);
+$secondary-color-accent: rgb(207, 207, 207);
+
+*,
+*::before,
+*::after {
+  // border: 1px solid black;
+}
+
+.new-resource-container {
+  width: 80%;
+  margin: 0 auto;
+
+  h1 {
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    min-width: 400px;
+  }
+
+  label {
+    margin-top: 1rem;
+  }
+
+  input,
+  textarea {
+    padding: 0.5em;
+  }
+
+  select {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+
+  button {
+    max-width: 100px;
+    padding: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    background-color: $primary-color;
+    color: $background-color;
+    box-shadow: 0px 4px $primary-color-dark;
+
+    &:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+  }
+}

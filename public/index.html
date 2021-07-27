@@ -18,16 +18,18 @@
     <!-- internal css -->
     <link rel="stylesheet" href="./styles/layout.css" />
     <link rel="stylesheet" href="./styles/resource.css" />
-
+    <link rel="stylesheet" href="./styles/newresource.css" />
+    <link rel="stylesheet" href="./styles/searchresources.css" />
     <title>Resource Wall</title>
   </head>
   <body>
     <!-- navigation bar -->
     <nav>
       <h3 class="logo">Resourcify</h3>
-      <a href="#"> Explore </a>
-      <form action="#">
+      <a href="#" id="explore"> Explore </a>
+      <form action="#" id="search-user-resources">
         <input
+          name="user-name"
           class="nav__search-bar"
           placeholder="Search for other users, find their resources..."
           type="search"
@@ -49,106 +51,30 @@
 
     <!-- main body container -->
     <main class="container">
-      <!--  -->
-      <!-- individual resource card -->
+      <!-- HTML BUILD AREA -->
 
-      <div class="resource__info">
-        <div class="resource__body">
-          <h2>This is a title</h2>
-          <p class="info__description">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
-            consequuntur ipsum ut, nemo explicabo voluptates numquam sit veniam
-            temporibus, repellendus deleniti molestiae modi voluptas maxime, ab
-            enim quod velit libero!
-          </p>
-          <p>www.linktowebsite.com/loremipsums</p>
-        </div>
-        <hr />
-        <div class="resource__data">
-          <p class="users-name">@John Doe</p>
-          <p>Created 12 months ago</p>
-        </div>
-        <div class="resource__controls">
-          <div class="resource__like">
-            <i class="fas fa-thumbs-up"></i>
-            <span class="like__counter">15 Likes</span>
-          </div>
-          <div class="resource__rate">
-            <select name="rating" id="rate-select">
-              <option value="">Rate</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <span id="average-rating">4.3/5 avg</span>
-          </div>
-        </div>
+      <!-- END HTML BUILD AREA -->
+
+      <!-- LOGIN CARD -->
+      <div class="login-card">
+        <h3 class="logo">Resourcify</h3>
+        <h2>Log in to see more</h2>
+        <input id="userID-input" type="text" placeholder="User ID" />
+        <a href="#" id="login-btn"> Login </a>
+        <p>
+          As per the highest standards in web security, this form automatically
+          sets an access cookie to whatever user you specify
+        </p>
       </div>
-
-      <!-- comments -->
-      <div class="resource__comments">
-        <form class="comments__form" action="#">
-          <textarea type="text" name="comment" id="" rows="3"></textarea>
-          <button type="submit">Comment</button>
-        </form>
-        <hr />
-        <div class="comments__container">
-          <!-- test comment -->
-          <div class="comment__card">
-            <header>
-              <h4>@Elon Musk</h4>
-              <p class="created_at">2 Years Ago</p>
-            </header>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
-              consequuntur ipsum ut, nemo explicabo voluptates numquam sit
-              veniam temporibus, repellendus deleniti molestiae modi voluptas
-              maxime, ab enim quod velit libero!
-            </p>
-            <hr />
-          </div>
-
-          <!-- test comment -->
-          <div class="comment__card">
-            <header>
-              <h4>@Barack Obama</h4>
-              <p class="created_at">2 Years Ago</p>
-            </header>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
-              consequuntur ipsum ut, nemo explicabo voluptates numquam sit
-              veniam temporibus, repellendus deleniti molestiae modi voluptas
-              maxime, ab enim quod velit libero!
-            </p>
-            <hr />
-          </div>
-
-          <!-- test comment -->
-          <div class="comment__card">
-            <header>
-              <h4>@Jeff Bezos</h4>
-              <p class="created_at">3 Years Ago</p>
-            </header>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
-              consequuntur ipsum ut, nemo explicabo voluptates numquam sit
-              veniam temporibus, repellendus deleniti molestiae modi voluptas
-              maxime, ab enim quod velit libero!
-            </p>
-            <hr />
-          </div>
-        </div>
-        <a class="scroll-top" href="#">Back To Top</a>
-      </div>
-
-      <!-- end of container -->
+      <!-- END OF MAIN BODY CONTAINER -->
     </main>
 
     <!-- external js -->
     <script src="./vendor/jquery-3.0.0.js"></script>
     <!-- internal js -->
+    <script src="./scripts/lib/allresources.js"></script>
+    <script src="./scripts/lib/searchresources.js"></script>
+    <script src="./scripts/lib/newresource.js"></script>
     <script src="./scripts/lib/user-collection.js"></script>
     <script src="./scripts/lib/resource.js"></script>
     <script src="./scripts/index.js"></script>
