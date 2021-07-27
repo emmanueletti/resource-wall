@@ -18,6 +18,7 @@
 - [x] /resources/search?u=name
 - [x] avg rating for resources
 - [x] POST to likes
+- [x] count likes for resources
 
 ## API map
 
@@ -27,13 +28,13 @@ Data type is `String` unless stated otherwise
 |---|---|---|
 |`GET /login`|`:id: Number`|Cookie, redirect|
 |`POST /api/resources`|`{url, title, description}`|`[{id: Number, user_id: Number, url, title, description, created_at: Timestamp}]`|
-|`GET /api/resources/search`|`:username: String`|`[{res_id: Number, auth_id: Number, url, title, description, res_timestamp: Timestamp, avg_rating: String}]`|
-|`GET /api/resources`|`:res_id: Number`|`[{res_id: Number, auth_id: Number, url, title, description, res_timestamp: Timestamp, avg_rating: String}]`|
+|`GET /api/resources/search`|`:username: String`|`[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]`|
+|`GET /api/resources`|`:res_id: Number`|`[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]`|
 |`POST /api/categories`|`{category_id: Number, resource_id: Number}`|`[{id: Number, user_id: Number, name}]`|
-|`POST /api/categories_resources`|`{category_id: Number, resource_id: Number}`|`[{id: Number, category_id: Number, resource_id: Number}`]|
+|`POST /api/categories_resources`|`{category_id: Number, resource_id: Number}`|`[{id: Number, category_id: Number, resource_id: Number}]`|
 |`POST /api/comments`|`{resource_id: Number, content}`|`[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`|
 |`GET /api/comments/search`|`?res: Number`|`[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`|
 |`POST /api/ratings`|`{resource_id: Number, value: Number}`|`[{id: Number, user_id: Number, resource_id: Number, value: Number}]`|
 |`POST /api/likes`|`{resource_id: Number}`|`[{id: Number, user_id: Number, resource_id: Number}]`|
 |`GET /api/likes/search`|`?u: Number`|`[{res_id: Number, url, title, description, created_at: Timestamp, user_id: Number}]`|
-|`GET /mywall`|Cookie|`[{res_id: Number, auth_id: Number, url, title, description, res_timestamp: Timestamp, avg_rating: String, liked_id: Number}]`|
+|`GET /mywall`|Cookie|`[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String, liked_id: Number}]`|
