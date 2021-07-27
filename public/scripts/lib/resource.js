@@ -81,9 +81,62 @@ renderResourcePage = () => {
   resourceCard.appendChild(resourceControls);
 
   // 3 - build comment card with data
+  // COMMENT FORM
+  const commentTextArea = document.createElement("textarea");
+  commentTextArea.setAttribute("type", "text");
+  commentTextArea.setAttribute("name", "comment");
+  commentTextArea.setAttribute("rows", "3");
+
+  const commentBtn = document.createElement("button");
+  commentBtn.setAttribute("type", "submit");
+  commentBtn.appendChild(document.createTextNode("Comment"));
+
+  const commentForm = document.createElement("form");
+  commentForm.className = "comments__form";
+  commentForm.appendChild(commentTextArea);
+  commentForm.appendChild(commentBtn);
+
+  const commentSeperator = document.createElement("hr");
+
+  // comments card / container
+  const commentCardUserName = document.createElement("h4");
+  commentCardUserName.appendChild(document.createTextNode("@Elon Musk"));
+
+  const commentCardCreatedDate = document.createElement("p");
+  commentCardCreatedDate.className = "created_at";
+  commentCardCreatedDate.appendChild(document.createTextNode("2 Years Ago"));
+
+  const commentCardHeader = document.createElement("header");
+  commentCardHeader.appendChild(commentCardUserName);
+  commentCardHeader.appendChild(commentCardCreatedDate);
+
+  const commentText = document.createElement("p");
+  commentText.appendChild(
+    document.createTextNode(
+      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit consequuntur ipsum ut, nemo explicabo voluptates numquam sit veniam temporibus, repellendus deleniti molestiae modi voluptas maxime, ab enim quod velit libero!`
+    )
+  );
+
+  const commentsCard = document.createElement("div");
+  commentsCard.className = "comments__card";
+  commentsCard.appendChild(commentCardHeader);
+  commentsCard.appendChild(commentText);
+  commentsCard.appendChild(commentSeperator);
+
+  const commentsContainer = document.createElement("div");
+  commentsContainer.classList = "comments__container";
+  commentsContainer.appendChild(commentsCard);
+
+  const resourceCommentsContainer = document.createElement("div");
+  resourceCommentsContainer.classList = "resource__comments";
+
+  resourceCommentsContainer.appendChild(commentForm);
+  resourceCommentsContainer.appendChild(document.createElement("hr"));
+  resourceCommentsContainer.appendChild(commentsContainer);
 
   // add to page
   $(".container").append(resourceCard);
+  $(".container").append(resourceCommentsContainer);
 
   // load event listeners
 };
