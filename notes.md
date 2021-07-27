@@ -21,6 +21,7 @@
 - [x] count likes for resources
 - [x] endpoint for user data
 - [ ] attach comments to the resource
+- [ ] route to get all resources for 'Explore'
 
 ## Bugs
 
