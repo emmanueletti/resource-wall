@@ -1,17 +1,3 @@
-// const fakeUserData = {
-//   id: 1,
-//   name: "Clark Kent",
-//   total_created_resources: 30,
-//   total_liked_resources: 40,
-// };
-
-const fakeResourceData = [
-  { id: 1, title: "Lorem Ipsum", category: "travel" },
-  { id: 2, title: "Lorem Ipsum", category: "travel" },
-  { id: 3, title: "Lorem Ipsum", category: "travel" },
-  { id: 4, title: "Lorem Ipsum", category: "travel" },
-];
-
 const buildUserCard = (data) => {
   // user card - user name
   const userCardName = document.createElement("h1");
@@ -167,7 +153,7 @@ const renderCollectionPage = () => {
   $(".container").append(collectionDiv);
 
   // 1 - set cookies for logged in user (user 3)
-  $.get("/login/2").then(() => {
+  $.get("/login/3").then(() => {
     // get "logged in" user's info
     const promiseA = $.get("api/userinfo");
     const promiseB = $.get("/mywall");
@@ -183,10 +169,7 @@ const renderCollectionPage = () => {
       });
 
       // render resources created
-      if (!createdResources.length) {
-        collectionDiv.innerHTML =
-          "<h1 style='text-align:center'> No Resources Created </h1>";
-      } else {
+      if (createdResources.length) {
         collectionDiv.appendChild(buildCreatedResources(createdResources));
       }
 
@@ -210,17 +193,16 @@ const renderCollectionPage = () => {
       };
 
       collectionDiv.prepend(buildUserCard(userData));
+
+      // 3 - load event listeners
+      $(".resources").click((e) => {
+        const card = e.target.closest(".resource-card");
+        if (!card) {
+          return;
+        }
+        // if clicked - render page for individual resource
+        renderResourcePage();
+      });
     });
-  });
-
-  // 3 - load event listeners
-  $(".resources").click((e) => {
-    const card = e.target.closest(".resource-card");
-    if (!card) {
-      return;
-    }
-
-    // if clicked - render page for individual resource
-    renderResourcePage();
   });
 };

@@ -10,4 +10,9 @@ $(document).ready(() => {
     e.preventDefault();
     renderCollectionPage();
   });
+
+  $(".nav__cta").click((e) => {
+    e.preventDefault();
+    renderNewResourceForm();
+  });
 });
