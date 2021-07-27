@@ -1,7 +1,7 @@
 fakeResourseDate = [{}];
 fakecommentData = [{}];
 
-const buildResourceCard = (data) => {
+const buildIndividualResource = (data) => {
   const resourceTitle = document.createElement("h2");
   resourceTitle.appendChild(document.createTextNode("This is a Title"));
 
@@ -145,7 +145,7 @@ renderResourcePage = () => {
   resourceCommentsContainer.appendChild(commentsContainer);
 
   // add to page
-  $(".container").append(buildResourceCard(fakeResourceData));
+  $(".container").append(buildIndividualResource(fakeResourceData));
   $(".container").append(resourceCommentsContainer);
 
   // load event listeners
