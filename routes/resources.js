@@ -26,7 +26,7 @@ JOIN likes ON likes.resource_id = resources.id
 WHERE users.name LIKE $1::varchar
 GROUP BY resources.id,
 users.name`,
-      [`%${u}%`],
+      [`%${u}%`]
     )
       .then((data) => res.json(data.rows))
       .catch((e) => res.status(500).json({ error: e.message }));
@@ -51,7 +51,7 @@ FROM resources
 WHERE resources.id = $1
 GROUP BY resources.id,
   users.name`,
-      [id],
+      [id]
     )
       .then((data) => res.json(data.rows))
       .catch((e) => res.status(500).json({ error: e.message }));
@@ -61,7 +61,7 @@ GROUP BY resources.id,
     const { url, title, description } = req.body;
     db.query(
       "INSERT INTO resources (user_id, url, title, description) VALUES ($1, $2, $3, $4) RETURNING *",
-      [user_id, url, title, description],
+      [user_id, url, title, description]
     )
       .then((data) => {
         res.json(data.rows);

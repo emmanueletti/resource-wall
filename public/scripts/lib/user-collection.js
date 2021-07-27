@@ -97,7 +97,7 @@ const buildResourceCard = (container, resource) => {
   container.appendChild(resourceCardDiv);
 };
 
-const buildCreatedResources = (fakeResourceData) => {
+const buildCreatedResources = (data) => {
   // title
   const createdResourcesCollectionTitle = document.createElement("h2");
   createdResourcesCollectionTitle.appendChild(
@@ -109,7 +109,7 @@ const buildCreatedResources = (fakeResourceData) => {
   resourcesContainer.classList = "resources";
 
   // build inidividual resource cards
-  fakeResourceData.forEach((resource) => {
+  data.forEach((resource) => {
     buildResourceCard(resourcesContainer, resource);
   });
 
@@ -119,6 +119,8 @@ const buildCreatedResources = (fakeResourceData) => {
   createdResourcesCollection.appendChild(resourcesContainer);
   return createdResourcesCollection;
 };
+
+//
 
 const buildLikedResources = (fakeResourceData) => {
   // title
@@ -152,57 +154,55 @@ const renderCollectionPage = () => {
   collectionDiv.className = "collection";
   $(".container").append(collectionDiv);
 
-  // 1 - set cookies for logged in user (user 3)
-  $.get("/login/3").then(() => {
-    // get "logged in" user's info
-    const promiseA = $.get("api/userinfo");
-    const promiseB = $.get("/mywall");
-    Promise.all([promiseA, promiseB]).then(([dataA, dataB]) => {
-      console.log(dataA, dataB);
-      const usersName = dataA[0].name;
+  // get "logged in" user's info
+  const promiseA = $.get("api/userinfo");
+  const promiseB = $.get("/mywall");
+  Promise.all([promiseA, promiseB]).then(([dataA, dataB]) => {
+    console.log("returned user data: ", dataA);
+    console.log("returned users resources: ", dataB);
+    const usersName = dataA[0].name;
 
-      // users created resourses data
-      const createdResources = dataB.filter((el) => {
-        if (el["auth_name"] === usersName) {
-          return el;
-        }
-      });
-
-      // render resources created
-      if (createdResources.length) {
-        collectionDiv.appendChild(buildCreatedResources(createdResources));
+    // users created resourses data
+    const createdResources = dataB.filter((el) => {
+      if (el["auth_name"] === usersName) {
+        return el;
       }
+    });
 
-      // liked resources data
-      const likedResources = dataB.filter((el) => {
-        if (el["auth_name"] !== usersName) {
-          return el;
-        }
-      });
+    // render resources created
+    if (createdResources.length) {
+      collectionDiv.appendChild(buildCreatedResources(createdResources));
+    }
 
-      // render liked resources
-      if (likedResources.length) {
-        collectionDiv.appendChild(buildLikedResources(likedResources));
+    // liked resources data
+    const likedResources = dataB.filter((el) => {
+      if (el["auth_name"] !== usersName) {
+        return el;
       }
+    });
 
-      const userData = {
-        id: dataA[0].id,
-        name: dataA[0].name,
-        total_created_resources: createdResources.length,
-        total_liked_resources: likedResources.length,
-      };
+    // render liked resources
+    if (likedResources.length) {
+      collectionDiv.appendChild(buildLikedResources(likedResources));
+    }
 
-      collectionDiv.prepend(buildUserCard(userData));
+    const userData = {
+      id: dataA[0].id,
+      name: dataA[0].name,
+      total_created_resources: createdResources.length,
+      total_liked_resources: likedResources.length,
+    };
 
-      // 3 - load event listeners
-      $(".resources").click((e) => {
-        const card = e.target.closest(".resource-card");
-        if (!card) {
-          return;
-        }
-        // if clicked - render page for individual resource
-        renderResourcePage();
-      });
+    collectionDiv.prepend(buildUserCard(userData));
+
+    // 3 - load event listeners
+    $(".resources").click((e) => {
+      const card = e.target.closest(".resource-card");
+      if (!card) {
+        return;
+      }
+      // if clicked - render page for individual resource
+      renderResourcePage();
     });
   });
 };

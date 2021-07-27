@@ -19,15 +19,17 @@
     <link rel="stylesheet" href="./styles/layout.css" />
     <link rel="stylesheet" href="./styles/resource.css" />
     <link rel="stylesheet" href="./styles/newresource.css" />
+    <link rel="stylesheet" href="./styles/searchresources.css" />
     <title>Resource Wall</title>
   </head>
   <body>
     <!-- navigation bar -->
     <nav>
       <h3 class="logo">Resourcify</h3>
-      <a href="#"> Explore </a>
-      <form action="#">
+      <a href="#" id="explore"> Explore </a>
+      <form action="#" id="search-user-resources">
         <input
+          name="user-name"
           class="nav__search-bar"
           placeholder="Search for other users, find their resources..."
           type="search"
@@ -49,14 +51,29 @@
 
     <!-- main body container -->
     <main class="container">
-      <!--  -->
+      <!-- HTML BUILD AREA -->
 
-      <!-- end of container -->
+      <!-- END HTML BUILD AREA -->
+
+      <!-- LOGIN CARD -->
+      <div class="login-card">
+        <h3 class="logo">Resourcify</h3>
+        <h2>Log in to see more</h2>
+        <input id="userID-input" type="text" placeholder="User ID" />
+        <a href="#" id="login-btn"> Login </a>
+        <p>
+          As per the highest standards in web security, this form automatically
+          sets an access cookie to whatever user you specify
+        </p>
+      </div>
+      <!-- END OF MAIN BODY CONTAINER -->
     </main>
 
     <!-- external js -->
     <script src="./vendor/jquery-3.0.0.js"></script>
     <!-- internal js -->
+    <script src="./scripts/lib/allresources.js"></script>
+    <script src="./scripts/lib/searchresources.js"></script>
     <script src="./scripts/lib/newresource.js"></script>
     <script src="./scripts/lib/user-collection.js"></script>
     <script src="./scripts/lib/resource.js"></script>

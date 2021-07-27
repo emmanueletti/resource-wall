@@ -31,6 +31,9 @@ body {
 //
 
 // Nav
+.logo {
+  color: $primary-color;
+}
 
 nav {
   display: flex;
@@ -39,10 +42,6 @@ nav {
 
   > * {
     margin: 0rem 1rem;
-  }
-
-  .logo {
-    color: $primary-color;
   }
 
   a {
@@ -136,6 +135,41 @@ nav {
   }
 }
 
+// Login Card
+
+.login-card {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem 4rem;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-top: 2rem;
+
+  input {
+    padding: 1rem;
+    border-radius: 20px;
+    border: 2px solid $secondary-color-accent;
+  }
+
+  a {
+    font-weight: bold;
+    background-color: $primary-color;
+    padding: 0.8rem 0;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    margin-top: 1rem;
+  }
+  p {
+    text-align: left;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    line-height: 1.5em;
+  }
+}
 // Container
 
 .container {

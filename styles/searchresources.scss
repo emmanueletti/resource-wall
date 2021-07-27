@@ -1,0 +1,24 @@
+$background-color: #ffffff;
+$primary-color: #e60024;
+$primary-color-dark: rgb(153, 0, 0);
+$secondary-color-accent: rgb(207, 207, 207);
+
+*,
+*::before,
+*::after {
+  // border: 1px solid black;
+}
+
+.search-container {
+  h2 {
+    text-align: center;
+  }
+
+  .search-collection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    text-align: center;
+  }
+}

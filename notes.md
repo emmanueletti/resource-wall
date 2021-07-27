@@ -22,6 +22,12 @@
 - [x] endpoint for user data
 - [ ] attach comments to the resource
 
+## Bugs
+
+- when new resource is created, the database seems to be updated according to data return from the server BUT the /mywall route does not update with the newly created resource for that user
+- potentially an issue with the query?
+- search for users collections is case sensitive, hernando(empty) vs Hernando(6 results)
+
 ## API map
 
 Data type is `String` unless stated otherwise

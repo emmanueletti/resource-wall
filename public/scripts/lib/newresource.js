@@ -30,6 +30,14 @@ const renderNewResourceForm = () => {
 
   $("#new-resource-form").submit((e) => {
     e.preventDefault();
-    console.log($(e.target).serializeArray());
+    const data = $(e.target).serialize();
+    $.post("/api/resources", data)
+      .done((data) => {
+        console.log("returned after creating new resource: ", data);
+        renderCollectionPage();
+      })
+      .fail((err) => {
+        console.log(err.stack);
+      });
   });
 };
