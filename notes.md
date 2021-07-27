@@ -20,7 +20,9 @@
 - [x] POST to likes
 - [x] count likes for resources
 - [x] endpoint for user data
-- [ ] attach comments to the resource
+- [ ] attach comments to the resource page
+- [x] fix the `/userinfo` query
+- [x] map and test `/userinfo`
 
 ## Bugs
 
@@ -46,3 +48,4 @@ Data type is `String` unless stated otherwise
 | `POST /api/likes`                | `{resource_id: Number}`                      | `[{id: Number, user_id: Number, resource_id: Number}]`                                                                                                   |
 | `GET /api/likes/search`          | `?u: Number`                                 | `[{res_id: Number, url, title, description, created_at: Timestamp, user_id: Number}]`                                                                    |
 | `GET /mywall`                    | Cookie                                       | `[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String, liked_id: Number}]` |
+| `GET /api/userinfo`              | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                                 |
