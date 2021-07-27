@@ -1,6 +1,3 @@
-fakeResourseDate = [{}];
-fakecommentData = [{}];
-
 const buildIndividualResource = (data) => {
   const resourceTitle = document.createElement("h2");
   resourceTitle.appendChild(document.createTextNode("This is a Title"));
@@ -80,7 +77,7 @@ const buildIndividualResource = (data) => {
 
 const buildCommentsSection = (data) => {};
 
-renderResourcePage = () => {
+renderResourcePage = (resID) => {
   // empty pages container
   $(".container").empty();
 

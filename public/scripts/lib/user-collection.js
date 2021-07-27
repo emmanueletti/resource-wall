@@ -202,7 +202,10 @@ const renderCollectionPage = () => {
         return;
       }
       // if clicked - render page for individual resource
-      renderResourcePage();
+      const resourceID = card.id;
+      console.log(card);
+      console.log(resourceID);
+      renderResourcePage(resourceID);
     });
   });
 };
