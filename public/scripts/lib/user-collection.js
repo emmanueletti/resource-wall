@@ -1,6 +1,6 @@
 const fakeUserData = {
   id: 1,
-  name: "John Doe",
+  name: "Clark Kent",
   email: "johndoe@gmail.com",
   sum_of_resources: 30,
   sum_of_likes: 40,
@@ -183,4 +183,13 @@ const renderCollectionPage = () => {
   collectionDiv.appendChild(buildLikedResources(fakeResourceData));
 
   // 3 - load event listeners
+  $(".resources").click((e) => {
+    const card = e.target.closest(".resource-card");
+    if (!card) {
+      return;
+    }
+
+    // if clicked - render page for individual resource
+    renderResourcePage();
+  });
 };

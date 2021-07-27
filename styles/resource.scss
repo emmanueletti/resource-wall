@@ -1,0 +1,87 @@
+$primary-color: #e60024;
+
+*,
+*::before,
+*::after {
+  // border: 1px solid black;
+}
+
+.resource__info {
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  padding: 2rem;
+  line-height: 1.5em;
+  border: 2px solid black;
+  box-shadow: 4px 4px $primary-color;
+
+  .info__description {
+    color: rgb(151, 151, 151);
+  }
+
+  .resource__data {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: rgb(151, 151, 151);
+  }
+
+  select {
+    margin-right: 0.8rem;
+  }
+}
+
+.resource__controls {
+  & > * {
+    margin: 1rem 0;
+  }
+
+  i {
+    margin-right: 0.5em;
+    font-size: 1.3rem;
+  }
+
+  i:hover {
+    cursor: pointer;
+    color: $primary-color;
+  }
+}
+
+.resource__comments {
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  padding: 2rem;
+  line-height: 1.5em;
+  border: 2px solid black;
+
+  textarea {
+    width: 100%;
+    resize: none;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  hr {
+    margin: 2rem 0;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  header > * {
+    margin: 0;
+  }
+
+  .created_at {
+    color: rgb(151, 151, 151);
+    font-size: 0.8rem;
+  }
+}
+
+.scroll-top {
+  text-decoration: none;
+}
