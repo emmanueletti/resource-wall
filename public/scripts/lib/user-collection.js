@@ -1,6 +1,6 @@
 const fakeUserData = {
   id: 1,
-  name: "John Doe",
+  name: "Clark Kent",
   email: "johndoe@gmail.com",
   sum_of_resources: 30,
   sum_of_likes: 40,
@@ -168,11 +168,11 @@ const renderCollectionPage = () => {
 
   // 1 - ajax call for data
   // -> get logged in users data
-  //    GET users/:id
+  //    GET user (id stored in cookies)
   // -> get logged in users created resources
-  //    GET users/:id/resources
+  //    GET user/resource
   // -> get logged in users liked resources
-  //    GET users/:id/resources/liked
+  //    GET user/
 
   // 2 - fill main collections div with content
   // USER CARD
@@ -183,4 +183,13 @@ const renderCollectionPage = () => {
   collectionDiv.appendChild(buildLikedResources(fakeResourceData));
 
   // 3 - load event listeners
+  $(".resources").click((e) => {
+    const card = e.target.closest(".resource-card");
+    if (!card) {
+      return;
+    }
+
+    // if clicked - render page for individual resource
+    renderResourcePage();
+  });
 };
