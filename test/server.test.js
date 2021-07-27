@@ -20,14 +20,15 @@ describe("server", () => {
           title: "Example",
           description: "At example page",
         })
-        .expect(200, done);
+        .expect(200)
+        .end(done);
     });
-    it("returns an array of resources on GET to /search for a given user_id", (done) => {
+    it("returns an array of resources on GET to /search for a given user name", (done) => {
       agent
-        .get("/api/resources/search?u=5")
+        .get("/api/resources/search?u=test")
         .expect(200)
         .expect((res) => {
-          if (!Array.isArray(res.body)) {
+          if (!res.body[0].avg_rating) {
             throw new Error("Assertion failed");
           }
         })
@@ -38,7 +39,7 @@ describe("server", () => {
         .get("/api/resources/42")
         .expect(200)
         .expect((res) => {
-          if (res.body[0].id !== 42 || !res.body[0].url) throw new Error("FAIL");
+          if (res.body[0].res_id !== 42 || !res.body[0].avg_rating) throw new Error("FAIL");
         })
         .end(done);
     });
@@ -101,6 +102,16 @@ describe("server", () => {
     });
   });
   describe("/api/likes", () => {
+    it("creates a new like on POST to /likes, returns the new like data", (done) => {
+      agent
+        .post("/api/likes")
+        .send({ resource_id: 42 })
+        .expect(200)
+        .expect((res) => {
+          if (!res.body[0].id) throw new Error("Fail");
+        })
+        .end(done);
+    });
     it("returns an array of liked resources on GET to /search for the given user_id", (done) => {
       agent
         .get("/api/likes/search?u=5")

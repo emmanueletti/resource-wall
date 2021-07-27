@@ -6,6 +6,20 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  router.post("/", (req, res) => {
+    const { user_id } = req.session;
+    const { resource_id } = req.body;
+    db.query(
+      "INSERT INTO likes (user_id, resource_id) VALUES ($1, $2) returning *",
+      [user_id, resource_id],
+    )
+      .then((data) => {
+        res.json(data.rows);
+      })
+      .catch((e) => {
+        res.status(500).json({ error: e.message });
+      });
+  });
   router.get("/search", (req, res) => {
     const { u } = req.query;
     db.query(
