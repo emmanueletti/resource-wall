@@ -5,7 +5,7 @@ const renderNewResourceForm = () => {
     `
     <div class="new-resource-container">
         <h1>New Resource</h1>
-        <form action="#">
+        <form action="#" id='new-resource-form'>
           <label for="title"> Title </label>
           <input type="text" name="title" id="title" />
 
@@ -13,7 +13,7 @@ const renderNewResourceForm = () => {
           <input type="text" name="url" id="url" />
 
           <label for="description"> Description </label>
-          <textarea type="text" name="title" id="description"></textarea>
+          <textarea type="text" name="description" id="description"></textarea>
 
           <label for="category">Choose a category:</label>
           <select name="category" id="category">
@@ -27,4 +27,9 @@ const renderNewResourceForm = () => {
       </div>
     `
   );
+
+  $("#new-resource-form").submit((e) => {
+    e.preventDefault();
+    console.log($(e.target).serializeArray());
+  });
 };
