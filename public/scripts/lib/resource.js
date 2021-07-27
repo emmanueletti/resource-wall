@@ -1,12 +1,7 @@
-renderResourcePage = () => {
-  // empty pages container
-  $(".container").empty();
+fakeResourseDate = [{}];
+fakecommentData = [{}];
 
-  // 1 - get ajax data
-
-  // 2 - build resource card with data given
-  // RESOURCE INFO
-  // resource body - title
+const buildResourceCard = (data) => {
   const resourceTitle = document.createElement("h2");
   resourceTitle.appendChild(document.createTextNode("This is a Title"));
 
@@ -80,6 +75,21 @@ renderResourcePage = () => {
   resourceCard.appendChild(resourceData);
   resourceCard.appendChild(resourceControls);
 
+  return resourceCard;
+};
+
+const buildCommentsSection = (data) => {};
+
+renderResourcePage = () => {
+  // empty pages container
+  $(".container").empty();
+
+  // 1 - get ajax data
+
+  // 2 - build resource card with data given
+  // RESOURCE INFO
+  // resource body - title
+
   // 3 - build comment card with data
   // COMMENT FORM
   const commentTextArea = document.createElement("textarea");
@@ -135,7 +145,7 @@ renderResourcePage = () => {
   resourceCommentsContainer.appendChild(commentsContainer);
 
   // add to page
-  $(".container").append(resourceCard);
+  $(".container").append(buildResourceCard(fakeResourceData));
   $(".container").append(resourceCommentsContainer);
 
   // load event listeners

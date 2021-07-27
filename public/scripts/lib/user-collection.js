@@ -67,7 +67,7 @@ const buildUserCard = (fakeUserData) => {
   return userCardDiv;
 };
 
-buildResourceCard = (container, resource) => {
+const buildResourceCard = (container, resource) => {
   // generate random number between 1000 and 2000 so unsplash image is unique for each card
   let imgDimensions = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
   const resourceCardImg = document.createElement("img");
@@ -111,7 +111,7 @@ buildResourceCard = (container, resource) => {
   container.appendChild(resourceCardDiv);
 };
 
-buildCreatedResources = (fakeResourceData) => {
+const buildCreatedResources = (fakeResourceData) => {
   // title
   const createdResourcesCollectionTitle = document.createElement("h2");
   createdResourcesCollectionTitle.appendChild(
@@ -134,7 +134,7 @@ buildCreatedResources = (fakeResourceData) => {
   return createdResourcesCollection;
 };
 
-buildLikedResources = (fakeResourceData) => {
+const buildLikedResources = (fakeResourceData) => {
   // title
   const likedResourcesCollectionTitle = document.createElement("h2");
   likedResourcesCollectionTitle.appendChild(
