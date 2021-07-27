@@ -1,10 +1,10 @@
-const fakeUserData = {
-  id: 1,
-  name: "Clark Kent",
-  email: "johndoe@gmail.com",
-  sum_of_resources: 30,
-  sum_of_likes: 40,
-};
+// const fakeUserData = {
+//   id: 1,
+//   name: "Clark Kent",
+//   total_created_resources: 30,
+//   total_liked_resources: 40,
+// };
+
 const fakeResourceData = [
   { id: 1, title: "Lorem Ipsum", category: "travel" },
   { id: 2, title: "Lorem Ipsum", category: "travel" },
@@ -12,17 +12,17 @@ const fakeResourceData = [
   { id: 4, title: "Lorem Ipsum", category: "travel" },
 ];
 
-const buildUserCard = (fakeUserData) => {
+const buildUserCard = (data) => {
   // user card - user name
   const userCardName = document.createElement("h1");
   userCardName.className = "user-card__name";
-  const userCardNameText = document.createTextNode(fakeUserData.name);
+  const userCardNameText = document.createTextNode(data.name);
   userCardName.appendChild(userCardNameText);
 
   // user card - num of resources created stat
   const userCardCreatedStat = document.createElement("span");
   const userCardCreatedStatContent = document.createTextNode(
-    fakeUserData["sum_of_resources"]
+    data["total_created_resources"]
   );
   userCardCreatedStat.appendChild(userCardCreatedStatContent);
   const userCardBioCreated = document.createElement("p");
@@ -38,7 +38,7 @@ const buildUserCard = (fakeUserData) => {
   // user card - num of resources liked stat
   const userCardLikedStat = document.createElement("span");
   const userCardLikedStatContent = document.createTextNode(
-    fakeUserData["sum_of_likes"]
+    data["total_liked_resources"]
   );
   userCardLikedStat.appendChild(userCardLikedStatContent);
   const userCardBioLiked = document.createElement("p");
@@ -166,21 +166,52 @@ const renderCollectionPage = () => {
   collectionDiv.className = "collection";
   $(".container").append(collectionDiv);
 
-  // 1 - ajax call for data
-  // -> get logged in users data
-  //    GET user (id stored in cookies)
-  // -> get logged in users created resources
-  //    GET user/resource
-  // -> get logged in users liked resources
-  //    GET user/
+  // 1 - set cookies for logged in user (user 3)
+  $.get("/login/2").then(() => {
+    // get "logged in" user's info
+    const promiseA = $.get("api/userinfo");
+    const promiseB = $.get("/mywall");
+    Promise.all([promiseA, promiseB]).then(([dataA, dataB]) => {
+      console.log(dataA, dataB);
+      const usersName = dataA[0].name;
 
-  // 2 - fill main collections div with content
-  // USER CARD
-  collectionDiv.appendChild(buildUserCard(fakeUserData));
-  // RESOURCES CREATED
-  collectionDiv.appendChild(buildCreatedResources(fakeResourceData));
-  // RESOURCES LIKED
-  collectionDiv.appendChild(buildLikedResources(fakeResourceData));
+      // users created resourses data
+      const createdResources = dataB.filter((el) => {
+        if (el["auth_name"] === usersName) {
+          return el;
+        }
+      });
+
+      // render resources created
+      if (!createdResources.length) {
+        collectionDiv.innerHTML =
+          "<h1 style='text-align:center'> No Resources Created </h1>";
+      } else {
+        collectionDiv.appendChild(buildCreatedResources(createdResources));
+      }
+
+      // liked resources data
+      const likedResources = dataB.filter((el) => {
+        if (el["auth_name"] !== usersName) {
+          return el;
+        }
+      });
+
+      // render liked resources
+      if (likedResources.length) {
+        collectionDiv.appendChild(buildLikedResources(likedResources));
+      }
+
+      const userData = {
+        id: dataA[0].id,
+        name: dataA[0].name,
+        total_created_resources: createdResources.length,
+        total_liked_resources: likedResources.length,
+      };
+
+      collectionDiv.prepend(buildUserCard(userData));
+    });
+  });
 
   // 3 - load event listeners
   $(".resources").click((e) => {
