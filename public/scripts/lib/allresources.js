@@ -1,1 +1,3 @@
-const renderAllResources = () => {};
+const renderAllResources = () => {
+  // get all resources
+};
