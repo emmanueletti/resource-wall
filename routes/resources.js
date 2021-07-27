@@ -11,17 +11,21 @@ module.exports = (db) => {
     db.query(
       `
 SELECT resources.id AS res_id,
-  resources.user_id AS auth_id,
-  url,
-  title,
-  description,
-  resources.created_at AS res_timestamp,
-  round(avg(ratings.value), 2) AS avg_rating
+resources.user_id AS auth_id,
+users.name AS auth_name,
+url,
+title,
+description,
+resources.created_at AS res_timestamp,
+round(avg(ratings.value), 2) AS avg_rating,
+COUNT(likes.id) AS likes
 FROM resources
-  JOIN ratings ON resource_id = resources.id
-  JOIN users ON users.id = resources.user_id
+JOIN ratings ON resource_id = resources.id
+JOIN users ON users.id = resources.user_id
+JOIN likes ON likes.resource_id = resources.id
 WHERE users.name LIKE $1::varchar
-GROUP BY resources.id`,
+GROUP BY resources.id,
+users.name`,
       [`%${u}%`],
     )
       .then((data) => res.json(data.rows))
@@ -33,15 +37,20 @@ GROUP BY resources.id`,
       `
 SELECT resources.id AS res_id,
   resources.user_id AS auth_id,
+  users.name AS auth_name,
   url,
   title,
   description,
   resources.created_at AS res_timestamp,
-  round(avg(ratings.value), 2) AS avg_rating
+  round(avg(ratings.value), 2) AS avg_rating,
+  COUNT(likes.id) AS likes
 FROM resources
   JOIN ratings ON resource_id = resources.id
+  JOIN users ON users.id = resources.user_id
+  JOIN likes ON likes.resource_id = resources.id
 WHERE resources.id = $1
-GROUP BY resources.id`,
+GROUP BY resources.id,
+  users.name`,
       [id],
     )
       .then((data) => res.json(data.rows))
