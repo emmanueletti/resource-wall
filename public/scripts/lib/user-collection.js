@@ -210,53 +210,57 @@ const renderCollectionPage = () => {
   // get "logged in" user's info
   const promiseA = $.get("api/userinfo");
   const promiseB = $.get("/mywall");
-  Promise.all([promiseA, promiseB]).then(([dataA, dataB]) => {
-    const usersName = dataA[0].name;
+  Promise.all([promiseA, promiseB])
+    .then(([dataA, dataB]) => {
+      const usersName = dataA[0].name;
 
-    // users created resourses data
-    const createdResources = dataB.filter((el) => {
-      if (el["auth_name"] === usersName) {
-        return el;
+      // users created resourses data
+      const createdResources = dataB.filter((el) => {
+        if (el["auth_name"] === usersName) {
+          return el;
+        }
+      });
+
+      // render resources created
+      if (createdResources.length) {
+        // sort resources created
+        // function defined at the top of this page
+        sortArrayByDate(createdResources);
+
+        // create the element
+        collectionDiv.appendChild(buildCreatedResources(createdResources));
       }
-    });
 
-    // render resources created
-    if (createdResources.length) {
-      // sort resources created
-      // function defined at the top of this page
-      sortArrayByDate(createdResources);
+      // liked resources data
+      const likedResources = dataB.filter((el) => {
+        if (el["auth_name"] !== usersName) {
+          return el;
+        }
+      });
 
-      // create the element
-      collectionDiv.appendChild(buildCreatedResources(createdResources));
-    }
+      // render liked resources
+      if (likedResources.length) {
+        // sort resources created
+        // function defined at the top of this page
+        sortArrayByDate(likedResources);
 
-    // liked resources data
-    const likedResources = dataB.filter((el) => {
-      if (el["auth_name"] !== usersName) {
-        return el;
+        collectionDiv.appendChild(buildLikedResources(likedResources));
       }
+
+      const userData = {
+        id: dataA[0].id,
+        name: dataA[0].name,
+        total_created_resources: createdResources.length,
+        total_liked_resources: likedResources.length,
+      };
+
+      collectionDiv.prepend(buildUserCard(userData));
+
+      // 3 - load event listeners
+      const $container = $(".resources");
+      addDelegatedResourceEvent($container);
+    })
+    .catch((err) => {
+      console.log(err.stack);
     });
-
-    // render liked resources
-    if (likedResources.length) {
-      // sort resources created
-      // function defined at the top of this page
-      sortArrayByDate(likedResources);
-
-      collectionDiv.appendChild(buildLikedResources(likedResources));
-    }
-
-    const userData = {
-      id: dataA[0].id,
-      name: dataA[0].name,
-      total_created_resources: createdResources.length,
-      total_liked_resources: likedResources.length,
-    };
-
-    collectionDiv.prepend(buildUserCard(userData));
-
-    // 3 - load event listeners
-    const $container = $(".resources");
-    addDelegatedResourceEvent($container);
-  });
 };
