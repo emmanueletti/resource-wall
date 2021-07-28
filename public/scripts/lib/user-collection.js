@@ -88,7 +88,7 @@ const buildResourceCard = (container, resource) => {
   // assemble resource card
   const resourceCardDiv = document.createElement("div");
   resourceCardDiv.className = "resource-card";
-  resourceCardDiv.id = `${resource.id}`;
+  resourceCardDiv.dataset.resourceId = `${resource["res_id"]}`;
   resourceCardDiv.appendChild(resourceCardImgDiv);
   resourceCardDiv.appendChild(resourceCardTitleH3);
   resourceCardDiv.appendChild(resourceCardIcons);
@@ -202,10 +202,20 @@ const renderCollectionPage = () => {
         return;
       }
       // if clicked - render page for individual resource
-      const resourceID = card.id;
-      console.log(card);
-      console.log(resourceID);
-      renderResourcePage(resourceID);
+      // this is a test of seperating the netowkr call from the construction function - refer to notes at the bottom of index.js
+      const resourceID = card.dataset.resourceId;
+      console.log("card: ", card);
+      console.log("resourceid from card: ", resourceID);
+
+      const resourcePromise = $.get(`/api/resources/${resourceID}`);
+
+      const commentPromise = $.get(`/api/comments/search?res=${resourceID}`);
+
+      Promise.all([resourcePromise, commentPromise]).then(
+        ([resourceData, commentData]) => {
+          renderResourcePage(resourceData, commentData);
+        }
+      );
     });
   });
 };

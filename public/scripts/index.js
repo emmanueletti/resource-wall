@@ -26,6 +26,7 @@ $(document).ready(() => {
   });
 
   // render users collection of resources
+  // user-collection.js
   $("#user-collection").click((e) => {
     e.preventDefault();
     renderCollectionPage();
@@ -43,3 +44,7 @@ $(document).ready(() => {
     renderSearchedUsersResources();
   });
 });
+
+// could we make it so that each on click initiates a netwrok call here and passes data to the rendering functions
+// call network functions can placed in a network.js file
+// this would give more opportunities to DRY the construction functions
