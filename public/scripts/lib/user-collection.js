@@ -13,6 +13,37 @@ const sortArrayByDate = (data) => {
   });
 };
 
+/**
+ * Function grabs container that holds the resources card from DOM and adds a delegated click event that builds and renders a page for the individual resource clicked
+ * @param {Object} container - an JQuery DOM object representing the container the resource cards are attached to
+ */
+const addDelegatedResourceEvent = (container) => {
+  container.click((e) => {
+    const card = e.target.closest(".resource-card");
+    if (!card) {
+      return;
+    }
+    // if clicked - render page for individual resource
+    // this is a test of seperating the netowkr call from the construction function - refer to notes at the bottom of index.js
+    const resourceID = card.dataset.resourceId;
+
+    const resourcePromise = $.get(`/api/resources/${resourceID}`);
+
+    const commentPromise = $.get(`/api/comments/search?res=${resourceID}`);
+
+    Promise.all([resourcePromise, commentPromise]).then(
+      ([resourceData, commentData]) => {
+        renderResourcePage(resourceData, commentData);
+      }
+    );
+  });
+};
+
+/**
+ * Function builds the user card that sits atop the logged in users collection of all created and liked resources
+ * @param {Array.<Object>} data - an array of a single object representing the logged in users info
+ * @returns {HTMLDivElement} an HTML div element to attach to the DOM element acting as the container for the page
+ */
 const buildUserCard = (data) => {
   // user card - user name
   const userCardName = document.createElement("h1");
@@ -68,6 +99,13 @@ const buildUserCard = (data) => {
   return userCardDiv;
 };
 
+// can we refactor this function to seperate the creation of the card and attachement to a container?
+
+/**
+ * Function that builds the HTML markup for an individual resource card and attaches it to a container
+ * @param {Object} container
+ * @param {Object} resource
+ */
 const buildResourceCard = (container, resource) => {
   // generate random number between 1000 and 2000 so unsplash image is unique for each card
   let imgDimensions = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
@@ -137,7 +175,7 @@ const buildCreatedResources = (data) => {
 
 //
 
-const buildLikedResources = (fakeResourceData) => {
+const buildLikedResources = (data) => {
   // title
   const likedResourcesCollectionTitle = document.createElement("h2");
   likedResourcesCollectionTitle.appendChild(
@@ -149,7 +187,7 @@ const buildLikedResources = (fakeResourceData) => {
   resourcesContainer.classList = "resources";
 
   // build inidividual resource cards
-  fakeResourceData.forEach((resource) => {
+  data.forEach((resource) => {
     buildResourceCard(resourcesContainer, resource);
   });
 
@@ -218,24 +256,7 @@ const renderCollectionPage = () => {
     collectionDiv.prepend(buildUserCard(userData));
 
     // 3 - load event listeners
-    $(".resources").click((e) => {
-      const card = e.target.closest(".resource-card");
-      if (!card) {
-        return;
-      }
-      // if clicked - render page for individual resource
-      // this is a test of seperating the netowkr call from the construction function - refer to notes at the bottom of index.js
-      const resourceID = card.dataset.resourceId;
-
-      const resourcePromise = $.get(`/api/resources/${resourceID}`);
-
-      const commentPromise = $.get(`/api/comments/search?res=${resourceID}`);
-
-      Promise.all([resourcePromise, commentPromise]).then(
-        ([resourceData, commentData]) => {
-          renderResourcePage(resourceData, commentData);
-        }
-      );
-    });
+    const $container = $(".resources");
+    addDelegatedResourceEvent($container);
   });
 };

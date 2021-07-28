@@ -1,5 +1,5 @@
 /**
- * Function builds the entire search results page
+ * Function builds the container for the search results page
  * @param {Array.<Object>} data - an array of objects with each object representing the resources created by a user
  * @returns {HTMLDivElement} an HTML div element to attach to the DOM element acting as the container for the page
  */
@@ -55,6 +55,10 @@ const renderSearchedUsersResources = () => {
 
       // build and render page
       $(".container").append(buildSearchResultPage(data));
+
+      // add event delegated evet listener to cards container
+      const $container = $(".search-container");
+      addDelegatedResourceEvent($container);
     })
     .fail((err) => {
       console.log(err.stack);
