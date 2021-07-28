@@ -2,6 +2,9 @@ const request = require("supertest");
 const server = require("../server");
 
 describe("server", () => {
+  before(() => {
+    require("../bin/resetdb");
+  });
   const agent = request.agent(server);
   describe("/login/1", () => {
     it("redirects to / on GET", (done) => {
@@ -23,14 +26,13 @@ describe("server", () => {
         .expect(200)
         .end(done);
     });
-    it("returns an array of resources on GET to /search for a given user name", (done) => {
+    it("returns an array of resources on GET to /search for a given user name, case-insensitive", (done) => {
       agent
-        .get("/api/resources/search?u=test")
+        .get("/api/resources/search?u=tEst")
         .expect(200)
         .expect((res) => {
-          if (!res.body[0].avg_rating) {
+          if (!res.body[0].avg_rating || !res.body[0].likes)
             throw new Error("Assertion failed");
-          }
         })
         .end(done);
     });
@@ -39,7 +41,11 @@ describe("server", () => {
         .get("/api/resources/42")
         .expect(200)
         .expect((res) => {
-          if (res.body[0].res_id !== 42 || !res.body[0].avg_rating)
+          if (
+            res.body[0].res_id !== 42 ||
+            !res.body[0].avg_rating ||
+            !res.body[0].likes
+          )
             throw new Error("FAIL");
         })
         .end(done);

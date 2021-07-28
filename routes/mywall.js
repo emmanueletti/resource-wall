@@ -10,27 +10,30 @@ module.exports = (db) => {
     const { user_id } = req.session;
     db.query(
       `
-SELECT resources.id AS res_id,
-  resources.user_id AS auth_id,
-  users.name AS auth_name,
-  url,
-  title,
-  description,
-  resources.created_at AS res_timestamp,
-  round(avg(ratings.value), 2) AS avg_rating,
-  COUNT(likes.id) AS likes,
-  likes.user_id AS liked_id
-FROM resources
-  JOIN likes ON resources.id = likes.resource_id
-  JOIN ratings ON ratings.resource_id = resources.id
-  JOIN users ON users.id = resources.user_id
-WHERE likes.user_id = $1
-  OR resources.user_id = $1
-GROUP BY resources.id,
-  likes.user_id,
-  users.name
+    SELECT r1.id AS res_id,
+      u1.id AS auth_id,
+      u1.name AS auth_name,
+      r1.url AS url,
+      r1.title AS title,
+      r1.description AS description,
+      r1.created_at AS res_timestamp
+    FROM users u1
+      JOIN resources r1 ON u1.id = r1.user_id
+    WHERE u1.id = $1
+    UNION
+    SELECT r2.id AS res_id,
+      u2.id AS auth_id,
+      u2.name AS auth_name,
+      r2.url AS url,
+      r2.title AS title,
+      r2.description AS description,
+      r2.created_at AS res_timestamp
+    FROM likes l
+      JOIN users u2 ON l.user_id = u2.id
+      JOIN resources r2 ON l.resource_id = r2.id
+    WHERE l.user_id = $1
 `,
-      [user_id],
+      [user_id]
     )
       .then((data) => res.json(data.rows))
       .catch((e) => res.status(500).json({ error: e.message }));
