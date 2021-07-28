@@ -8,6 +8,7 @@ $(document).ready(() => {
 
   // get all user names for search bar
   $.get("/api/users").done((data) => {
+    data.sort();
     data.forEach((name) => {
       const option = document.createElement("option");
       option.value = name["user_name"];

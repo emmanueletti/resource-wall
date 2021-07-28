@@ -161,10 +161,13 @@ const renderCollectionPage = () => {
     console.log("returned user data: ", dataA);
     console.log("returned users resources: ", dataB);
     const usersName = dataA[0].name;
+    console.log(dataA);
 
     // users created resourses data
     const createdResources = dataB.filter((el) => {
       if (el["auth_name"] === usersName) {
+        console.log("element", el);
+        console.log("usersname", usersName);
         return el;
       }
     });
@@ -180,6 +183,9 @@ const renderCollectionPage = () => {
         return el;
       }
     });
+
+    console.log("created resource: ", createdResources);
+    console.log("liked resource: ", likedResources);
 
     // render liked resources
     if (likedResources.length) {
