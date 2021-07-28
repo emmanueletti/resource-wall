@@ -1,23 +1,27 @@
+timeago.format(new Date());
+
 const buildIndividualResource = (data) => {
+  const dataObj = data[0];
+  const {
+    auth_name: creator,
+    res_timestamp: timestamp,
+    res_id: id,
+    title,
+    url,
+    description,
+  } = dataObj;
+
   const resourceTitle = document.createElement("h2");
-  resourceTitle.appendChild(document.createTextNode("This is a Title"));
+  resourceTitle.appendChild(document.createTextNode(title));
 
   // resource body - description
   const resourceDescription = document.createElement("p");
   resourceDescription.className = "info__description";
-  resourceDescription.appendChild(
-    document.createTextNode(`
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
-    consequuntur ipsum ut, nemo explicabo voluptates numquam sit veniam
-    temporibus, repellendus deleniti molestiae modi voluptas maxime, ab
-    enim quod velit libero!`)
-  );
+  resourceDescription.appendChild(document.createTextNode(description));
 
   // resource body - url
   const resourceURL = document.createElement("p");
-  resourceURL.appendChild(
-    document.createTextNode("www.linktowebsite.com/loremipsums")
-  );
+  resourceURL.appendChild(document.createTextNode(url));
 
   // resource body
   const resourceBody = document.createElement("div");
@@ -32,12 +36,12 @@ const buildIndividualResource = (data) => {
   // RESOURCE DATA
   // data - users name
   const resourceDataUser = document.createElement("p");
-  resourceDataUser.appendChild(document.createTextNode("@John Doe"));
+  resourceDataUser.appendChild(document.createTextNode(`@${creator}`));
 
   //data - resource created at
   const resourceCreationDate = document.createElement("p");
   resourceCreationDate.appendChild(
-    document.createTextNode("Created 12 months ago")
+    document.createTextNode(timeago.format(timestamp))
   );
 
   const resourceData = document.createElement("div");
@@ -50,7 +54,7 @@ const buildIndividualResource = (data) => {
   resourceControls.innerHTML = `
     <div class="resource__like">
       <i class="fas fa-thumbs-up"></i>
-      <span class="like__counter">15 Likes</span>
+      <span class="like__counter">?? Likes</span>
     </div>
     <div class="resource__rate">
       <select name="rating" id="rate-select">
@@ -61,12 +65,13 @@ const buildIndividualResource = (data) => {
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <span id="average-rating">4.3/5 avg</span>
+      <span id="average-rating">??/5 avg</span>
     </div>
   `;
 
   const resourceCard = document.createElement("div");
   resourceCard.className = "resource__info";
+  resourceCard.dataset.resourceId = id;
   resourceCard.appendChild(resourceBody);
   resourceCard.appendChild(resourceBodySeperator);
   resourceCard.appendChild(resourceData);
@@ -75,20 +80,7 @@ const buildIndividualResource = (data) => {
   return resourceCard;
 };
 
-const buildCommentsSection = (data) => {};
-
-renderResourcePage = (resID) => {
-  // empty pages container
-  $(".container").empty();
-
-  // 1 - get ajax data
-
-  // 2 - build resource card with data given
-  // RESOURCE INFO
-  // resource body - title
-
-  // 3 - build comment card with data
-  // COMMENT FORM
+const buildCommentsSection = (data) => {
   const commentTextArea = document.createElement("textarea");
   commentTextArea.setAttribute("type", "text");
   commentTextArea.setAttribute("name", "comment");
@@ -103,36 +95,42 @@ renderResourcePage = (resID) => {
   commentForm.appendChild(commentTextArea);
   commentForm.appendChild(commentBtn);
 
-  const commentSeperator = document.createElement("hr");
-
   // comments card / container
-  const commentCardUserName = document.createElement("h4");
-  commentCardUserName.appendChild(document.createTextNode("@Elon Musk"));
-
-  const commentCardCreatedDate = document.createElement("p");
-  commentCardCreatedDate.className = "created_at";
-  commentCardCreatedDate.appendChild(document.createTextNode("2 Years Ago"));
-
-  const commentCardHeader = document.createElement("header");
-  commentCardHeader.appendChild(commentCardUserName);
-  commentCardHeader.appendChild(commentCardCreatedDate);
-
-  const commentText = document.createElement("p");
-  commentText.appendChild(
-    document.createTextNode(
-      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit consequuntur ipsum ut, nemo explicabo voluptates numquam sit veniam temporibus, repellendus deleniti molestiae modi voluptas maxime, ab enim quod velit libero!`
-    )
-  );
-
-  const commentsCard = document.createElement("div");
-  commentsCard.className = "comments__card";
-  commentsCard.appendChild(commentCardHeader);
-  commentsCard.appendChild(commentText);
-  commentsCard.appendChild(commentSeperator);
 
   const commentsContainer = document.createElement("div");
   commentsContainer.classList = "comments__container";
-  commentsContainer.appendChild(commentsCard);
+
+  data.forEach((comment) => {
+    const { created_at: timestamp, user_id: user, content } = comment;
+
+    const commentCardUserName = document.createElement("h4");
+    commentCardUserName.appendChild(
+      document.createTextNode(
+        `@id:${user} - Need user_id converted to username`
+      )
+    );
+
+    const commentCardCreatedDate = document.createElement("p");
+    commentCardCreatedDate.className = "created_at";
+    commentCardCreatedDate.appendChild(
+      document.createTextNode(timeago.format(timestamp))
+    );
+
+    const commentCardHeader = document.createElement("header");
+    commentCardHeader.appendChild(commentCardUserName);
+    commentCardHeader.appendChild(commentCardCreatedDate);
+
+    const commentText = document.createElement("p");
+    commentText.appendChild(document.createTextNode(content));
+
+    const commentsCard = document.createElement("div");
+    commentsCard.className = "comments__card";
+    commentsCard.appendChild(commentCardHeader);
+    commentsCard.appendChild(commentText);
+    commentsCard.appendChild(document.createElement("hr"));
+
+    commentsContainer.appendChild(commentsCard);
+  });
 
   const resourceCommentsContainer = document.createElement("div");
   resourceCommentsContainer.classList = "resource__comments";
@@ -141,9 +139,44 @@ renderResourcePage = (resID) => {
   resourceCommentsContainer.appendChild(document.createElement("hr"));
   resourceCommentsContainer.appendChild(commentsContainer);
 
-  // add to page
-  $(".container").append(buildIndividualResource(fakeResourceData));
-  $(".container").append(resourceCommentsContainer);
+  return resourceCommentsContainer;
+};
+
+const renderResourcePage = (resourceData, commentsData) => {
+  // empty pages container
+  $(".container").empty();
+
+  // 2 - build resource card with data given
+  $(".container").append(buildIndividualResource(resourceData));
+
+  // 3 - build comment card with data given
+  $(".container").append(buildCommentsSection(commentsData));
 
   // load event listeners
+  // create a new comment and refresh comments section with new data
+
+  $(".comments__form").submit((e) => {
+    e.preventDefault();
+
+    // create comment
+
+    const resId = $(".resource__info").data().resourceId;
+    const comment = $(`textarea`).val();
+    const commentFormData = {
+      resource_id: Number(resId),
+      content: comment,
+    };
+    console.log(commentFormData);
+    $.post("/api/comments", commentFormData)
+      .done((data) => {
+        console.log(data);
+      })
+      .fail((err) => {
+        console.log(err.stack);
+      });
+  });
+
+  // like resource
+
+  // rate resource
 };
