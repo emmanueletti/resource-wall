@@ -30,10 +30,15 @@
       <form action="#" id="search-user-resources">
         <input
           name="user-name"
+          list="users-datalist"
           class="nav__search-bar"
           placeholder="Search for other users, find their resources..."
           type="search"
         />
+        <datalist id="users-datalist">
+          <!-- options get added here -->
+        </datalist>
+
         <button type="submit"><i class="fas fa-search"></i></button>
       </form>
       <a href="#" class="nav__cta">Create New</a>

@@ -6,6 +6,21 @@ $(document).ready(() => {
     $(".nav__dropdown-menu").slideToggle();
   });
 
+  const usernames = [
+    { user_name: "bobby" },
+    { user_name: "bobba" },
+    { user_name: "casey" },
+    { user_name: "hansel" },
+  ];
+  // get user names for search bar
+  usernames.forEach((name) => {
+    const option = document.createElement("option");
+    option.value = name["user_name"];
+    console.log(option);
+    $("#users-datalist").prepend(option);
+    console.log($("#users-datalist").children());
+  });
+
   // set the user cookie to a desired user
   $("#login-btn").click((e) => {
     e.preventDefault();
