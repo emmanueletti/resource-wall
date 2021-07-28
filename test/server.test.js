@@ -104,11 +104,14 @@ describe("server", () => {
     it("creates a new rating on POST, returns the rating data", (done) => {
       agent
         .post("/api/ratings")
-        .send({ resource_id: 42, value: 3 })
+        .send({ resource_id: 39, value: 3 })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].user_id !== 1 || res.body[0].value !== 3)
-            throw new Error("FAIL");
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 39) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Trouble on POST to /api/ratings");
         })
         .end(done);
     });

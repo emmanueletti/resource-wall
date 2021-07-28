@@ -32,7 +32,7 @@
 - [x] update `GET /likes/search` to return an array of likes for a given `?res=id`
 - [x] update `POST /likes` to return an array of likes for the resource
 - [x] add `DELETE /likes` to delete the like for the given `resource_id`, returning the updated array of likes
-- [ ] update `POST /ratings` returning an array of all ratings for the rosource
+- [x] update `POST /ratings` to return an array of all ratings for the resource
 - [ ] add `PUT /ratings` to update the rating and return the array of ratings
 - [ ] add `GET /categories` to return an array of categories for the signed-in user
 - [ ] add `GET /categories/search` to return an array of categories for the given `?res=id`
@@ -67,7 +67,7 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `POST /api/categories_resources`           | `{category_id: Number, resource_id: Number}` | `[{id: Number, category_id: Number, resource_id: Number}]`                                                                                |
 | `POST /api/comments`                       | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`                                                    |
 | `GET /api/comments/search?res`             | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                      |
-| `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                     |
+| `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `POST /api/likes`                          | `{resource_id: Number}`                      | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `DELETE /api/likes`                        | `{resource_id: Number}`                      | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `GET /api/likes/search?u`                  | `?user_id: Number`                           | `[...{res_id: Number, url, title, description, created_at: Timestamp, user_id: Number}]`                                                  |
@@ -76,7 +76,6 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /api/userinfo`                        | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                  |
 | `GET /api/users`                           | Nothing                                      | `[...{user_name}]`                                                                                                                        |
 | work in progress                           |
-| `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `PUT /api/ratings`                         | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `GET /api/categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |
 | `GET /api/categories/search?res`           | `?res_id: Number`                            | `[...{id: Number, user_id: Number, name}]`                                                                                                |
