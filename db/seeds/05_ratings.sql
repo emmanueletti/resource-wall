@@ -28,7 +28,6 @@ insert into ratings (user_id, resource_id, value) values (5, 22, 4);
 insert into ratings (user_id, resource_id, value) values (4, 28, 2);
 insert into ratings (user_id, resource_id, value) values (5, 29, 2);
 insert into ratings (user_id, resource_id, value) values (2, 41, 1);
-insert into ratings (user_id, resource_id, value) values (1, 42, 4);
 insert into ratings (user_id, resource_id, value) values (4, 24, 4);
 insert into ratings (user_id, resource_id, value) values (5, 3, 1);
 insert into ratings (user_id, resource_id, value) values (2, 25, 3);
