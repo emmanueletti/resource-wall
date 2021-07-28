@@ -37,7 +37,6 @@ insert into likes (user_id, resource_id) values (4, 19);
 insert into likes (user_id, resource_id) values (4, 35);
 insert into likes (user_id, resource_id) values (3, 32);
 insert into likes (user_id, resource_id) values (6, 26);
-insert into likes (user_id, resource_id) values (1, 42);
 insert into likes (user_id, resource_id) values (5, 35);
 insert into likes (user_id, resource_id) values (1, 31);
 insert into likes (user_id, resource_id) values (5, 46);

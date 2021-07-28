@@ -10,23 +10,42 @@ module.exports = (db) => {
     const { u } = req.query;
     db.query(
       `
-SELECT resources.id AS res_id,
-resources.user_id AS auth_id,
-users.name AS auth_name,
-url,
-title,
-description,
-resources.created_at AS res_timestamp,
-round(avg(ratings.value), 2) AS avg_rating,
-COUNT(likes.id) AS likes
-FROM resources
-JOIN ratings ON resource_id = resources.id
-JOIN users ON users.id = resources.user_id
-JOIN likes ON likes.resource_id = resources.id
-WHERE users.name LIKE $1::varchar
-GROUP BY resources.id,
-users.name`,
-      [`%${u}%`]
+    SELECT m.res_id,
+      m.auth_id,
+      m.auth_name,
+      m.url,
+      m.title,
+      m.description,
+      m.res_timestamp,
+      r.avg_rating,
+      l.likes
+    FROM (
+        SELECT resources.id AS res_id,
+          users.id AS auth_id,
+          users.name AS auth_name,
+          resources.url AS url,
+          resources.title AS title,
+          resources.description AS description,
+          resources.created_at AS res_timestamp
+        FROM resources
+          JOIN users ON users.id = resources.user_id
+        WHERE LOWER(users.name) LIKE $1::varchar
+      ) m
+      JOIN (
+        SELECT resources.id AS res_id,
+          COUNT(likes.id) AS likes
+        FROM resources
+          LEFT JOIN likes ON resources.id = likes.resource_id
+        GROUP BY resources.id
+      ) l ON m.res_id = l.res_id
+      JOIN (
+        SELECT round(avg(value), 2) AS avg_rating,
+          resources.id AS res_id
+        FROM resources
+          LEFT JOIN ratings ON resources.id = ratings.resource_id
+        GROUP BY resources.id
+      ) r ON m.res_id = r.res_id;`,
+      [`%${u.toLowerCase()}%`]
     )
       .then((data) => res.json(data.rows))
       .catch((e) => res.status(500).json({ error: e.message }));
@@ -35,22 +54,38 @@ users.name`,
     const { id } = req.params;
     db.query(
       `
-SELECT resources.id AS res_id,
-  resources.user_id AS auth_id,
-  users.name AS auth_name,
-  url,
-  title,
-  description,
-  resources.created_at AS res_timestamp,
-  round(avg(ratings.value), 2) AS avg_rating,
-  COUNT(likes.id) AS likes
-FROM resources
-  JOIN ratings ON resource_id = resources.id
-  JOIN users ON users.id = resources.user_id
-  JOIN likes ON likes.resource_id = resources.id
-WHERE resources.id = $1
-GROUP BY resources.id,
-  users.name`,
+    SELECT m.res_id,
+      m.auth_id,
+      m.auth_name,
+      m.url,
+      m.title,
+      m.description,
+      m.res_timestamp,
+      r.avg_rating,
+      l.likes
+    FROM (
+        SELECT resources.id AS res_id,
+          users.id AS auth_id,
+          users.name AS auth_name,
+          resources.url AS url,
+          resources.title AS title,
+          resources.description AS description,
+          resources.created_at AS res_timestamp
+        FROM resources
+          JOIN users ON resources.user_id = users.id
+        WHERE resources.id = $1
+      ) m,
+      (
+        SELECT COUNT(id) AS likes
+        FROM likes
+        WHERE resource_id = $1
+      ) l,
+      (
+        SELECT round(avg(value), 2) AS avg_rating
+        FROM ratings
+        WHERE resource_id = $1
+      ) r;
+    `,
       [id]
     )
       .then((data) => res.json(data.rows))
