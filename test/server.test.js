@@ -134,6 +134,19 @@ describe("server", () => {
         })
         .end(done);
     });
+    it("returns an array of likes on GET to /search for the given res_id", (done) => {
+      agent
+        .get("/api/likes/search?res=20")
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 20) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Check /likes/search?res");
+        })
+        .end(done);
+    });
   });
   describe("/mywall", () => {
     it("returns a list of created and liked resources for the logged-in user", (done) => {

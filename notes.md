@@ -29,12 +29,13 @@
 - [x] return an array of user names from `GET /api/users`
 - [x] fix `/mywall` return value
 - [x] correct the map for `POST /categories` to reflect the expectations
-- [ ] update `GET /likes/search` to return an array of likes for a given `?res=id`
+- [x] update `GET /likes/search` to return an array of likes for a given `?res=id`
 - [ ] update `POST /likes` to return an array of likes for the resource
 - [ ] add `DELETE /likes` to delete the like for the given `resource_id`, returning the updated array of likes
 - [ ] update `POST /ratings` returning an array of all ratings for the rosource
 - [ ] add `PUT /ratings` to update the rating and return the array of ratings
-- [ ] add `GET /categories/search` to return an array of categories for the given `?u=id` or `?res=id`
+- [ ] add `GET /categories` to return an array of categories for the signed-in user
+- [ ] add `GET /categories/search` to return an array of categories for the given `?res=id`
 - [ ] add `GET /categories_resources/search` to return an array of connections for the given `?cat=id`
 - [ ] communicate to the user that a resource is already liked
 
@@ -72,12 +73,12 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /mywall`                          | Cookie                                       | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp}]`                                    |
 | `GET /api/userinfo`                    | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                  |
 | `GET /api/users`                       | Nothing                                      | `[...{user_name}]`                                                                                                                        |
+| `GET /api/likes/search?res`            | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | work in progress                       |
-| `GET /likes/search?res`                | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `POST /api/likes`                      | `{resource_id: Number}`                      | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `DELETE /api/likes`                    | `{resource_id: Number}`                      | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `POST /api/ratings`                    | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `PUT /api/ratings`                     | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
-| `GET /categories/search?u`             | `?user_id: Number`                           | `[...{id: Number, user_id: Number, name}]`                                                                                                |
+| `GET /categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |
 | `GET /categories/search?res`           | `?res_id: Number`                            | `[...{id: Number, user_id: Number, name}]`                                                                                                |
 | `GET /categories_resources/search?cat` | `?cat_id: Number`                            | `[...{id: Number, category_id: Number, resource_id: Number}]`                                                                             |
