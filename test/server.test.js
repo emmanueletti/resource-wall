@@ -114,13 +114,17 @@ describe("server", () => {
     });
   });
   describe("/api/likes", () => {
-    it("creates a new like on POST to /likes, returns the new like data", (done) => {
+    it("creates a new like on POST to /likes, returns an array of likes for the resource", (done) => {
       agent
         .post("/api/likes")
-        .send({ resource_id: 42 })
+        .send({ resource_id: 30 })
         .expect(200)
         .expect((res) => {
-          if (!res.body[0].id) throw new Error("Fail");
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 30) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Trouble on POST to /api/likes");
         })
         .end(done);
     });

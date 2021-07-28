@@ -9,10 +9,16 @@ module.exports = (db) => {
   router.post("/", (req, res) => {
     const { user_id } = req.session;
     const { resource_id } = req.body;
-    db.query(
-      "INSERT INTO likes (user_id, resource_id) VALUES ($1, $2) returning *",
-      [user_id, resource_id]
-    )
+    db.query("INSERT INTO likes (user_id, resource_id) VALUES ($1, $2)", [
+      user_id,
+      resource_id,
+    ])
+      .then(() =>
+        db.query(
+          "SELECT id, user_id, resource_id FROM likes WHERE resource_id = $1",
+          [resource_id]
+        )
+      )
       .then((data) => {
         res.json(data.rows);
       })
