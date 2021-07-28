@@ -141,7 +141,8 @@ describe("server", () => {
         .get("/mywall")
         .expect(200)
         .expect((res) => {
-          if (!Array.isArray(res.body)) throw new Error("FAIL");
+          if (res.body.every((e) => e.auth_id === res.body[0].auth_id))
+            throw new Error("Oh noes! All auth_ids are the same!");
         })
         .end(done);
     });
