@@ -8,14 +8,16 @@
 
 [x] when searching for another users resources, arrange resources to display resources from most recently created to oldest on the front end
 
-[ ] bugs with comments
+[x] bugs with comments
 
 - some comment sections for some resources not appearing till afer one comment is made
 - for some resources after a comment is made, making a new comment triggers the default brower refresh/POST request behavior
 
-[ ] add like and average rating counter that refreshes with each new like and rating
+[] add like and average rating counter that refreshes with each new like and rating
 
 [x] add event listener to cards displayed after you search for another users resources
+
+[x] change userid to user name in comments
 
 [ ] add ability to like and rate resources
 
