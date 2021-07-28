@@ -25,8 +25,8 @@
 - [x] fix case-sensitivity for search
 - [x] attach comments to the resource page
 - [x] prevent users from liking the same resource multiple times
-- [ ] return user name from `GET /api/comments/search`
-- [ ] return an array of user names from `GET /api/users`
+- [x] return user name from `GET /api/comments/search`
+- [x] return an array of user names from `GET /api/users`
 - [ ] communicate to the user that a resource is already liked
 
 ## Edge Cases
@@ -55,9 +55,10 @@ Data type is `String` unless stated otherwise
 | `POST /api/categories`           | `{category_id: Number, resource_id: Number}` | `[{id: Number, user_id: Number, name}]`                                                                                                |
 | `POST /api/categories_resources` | `{category_id: Number, resource_id: Number}` | `[{id: Number, category_id: Number, resource_id: Number}]`                                                                             |
 | `POST /api/comments`             | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`                                                 |
-| `GET /api/comments/search`       | `?res: Number`                               | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`                                                 |
+| `GET /api/comments/search`       | `?res: Number`                               | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                      |
 | `POST /api/ratings`              | `{resource_id: Number, value: Number}`       | `[{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `POST /api/likes`                | `{resource_id: Number}`                      | `[{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `GET /api/likes/search`          | `?u: Number`                                 | `[{res_id: Number, url, title, description, created_at: Timestamp, user_id: Number}]`                                                  |
 | `GET /mywall`                    | Cookie                                       | `[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp}]`                                    |
 | `GET /api/userinfo`              | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                               |
+| `GET /api/users`                 | Nothing                                      | `[{user_name}]`                                                                                                                        |

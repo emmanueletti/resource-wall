@@ -94,7 +94,8 @@ describe("server", () => {
         .get("/api/comments/search?res=42")
         .expect(200)
         .expect((res) => {
-          if (!Array.isArray(res.body)) throw new Error("FAIL");
+          const sample = res.body[0];
+          if (!sample.content || !sample.user_name) throw new Error("FAIL");
         })
         .end(done);
     });
@@ -152,6 +153,18 @@ describe("server", () => {
         .expect(200)
         .expect((res) => {
           if (!res.body[0].name) throw new Error("FAIL");
+        })
+        .end(done);
+    });
+  });
+  describe("/api/users", () => {
+    it("return an array of objects with user names on GET", (done) => {
+      agent
+        .get("/api/users")
+        .expect(200)
+        .expect((res) => {
+          if (!res.body[0].user_name)
+            throw new Error("No user_name for GET /users");
         })
         .end(done);
     });
