@@ -1,3 +1,8 @@
+/**
+ * Function builds the entire search results page
+ * @param {Array.<Object>} data - an array of objects with each object representing the resources created by a user
+ * @returns {HTMLDivElement} an HTML div element to attach to the DOM element acting as the container for the page
+ */
 const buildSearchResultPage = (data) => {
   const searchedUsersName = document.createElement("span");
   searchedUsersName.appendChild(
@@ -25,7 +30,6 @@ const buildSearchResultPage = (data) => {
 
 const renderSearchedUsersResources = () => {
   const userName = $(".nav__search-bar").val();
-  console.log("user being searched for: ", userName);
 
   if (!userName) {
     // implement an error message
@@ -35,8 +39,6 @@ const renderSearchedUsersResources = () => {
   // get users collection data
   $.get(`/api/resources/search/?u=${userName}`)
     .done((data) => {
-      console.log(data);
-
       // empty page
       $(".container").empty();
 
@@ -47,6 +49,9 @@ const renderSearchedUsersResources = () => {
         );
         return;
       }
+
+      // sort the data by data
+      sortArrayByDate(data);
 
       // build and render page
       $(".container").append(buildSearchResultPage(data));
