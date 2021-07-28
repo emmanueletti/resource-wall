@@ -27,6 +27,7 @@
 - [x] prevent users from liking the same resource multiple times
 - [x] return user name from `GET /api/comments/search`
 - [x] return an array of user names from `GET /api/users`
+- [x] fix `/mywall` return value
 - [ ] communicate to the user that a resource is already liked
 
 ## Edge Cases

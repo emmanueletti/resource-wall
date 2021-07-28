@@ -29,8 +29,8 @@ module.exports = (db) => {
       r2.description AS description,
       r2.created_at AS res_timestamp
     FROM likes l
-      JOIN users u2 ON l.user_id = u2.id
       JOIN resources r2 ON l.resource_id = r2.id
+      JOIN users u2 ON r2.user_id = u2.id
     WHERE l.user_id = $1
 `,
       [user_id]
