@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="./styles/resource.css" />
     <link rel="stylesheet" href="./styles/newresource.css" />
     <link rel="stylesheet" href="./styles/searchresources.css" />
+    <link rel="stylesheet" href="./styles/managecategories.css" />
     <title>Resource Wall</title>
   </head>
   <body>
@@ -49,7 +50,7 @@
     <div class="nav__dropdown-menu">
       <ul>
         <li id="user-collection">My Collection</li>
-        <li>Manage Categories</li>
+        <li id="manage-categories">Manage Categories</li>
         <li>Logout</li>
       </ul>
     </div>
@@ -57,32 +58,7 @@
     <!-- main body container -->
     <main class="container">
       <!-- HTML BUILD AREA -->
-      <div class="category-container">
-        <h2>Current Categories</h2>
-        <div class="category">
-          <p>Travel</p>
-          <button>Delete</button>
-        </div>
 
-        <div class="category">
-          <p>Space</p>
-          <button>Delete</button>
-        </div>
-
-        <div class="category">
-          <p>Nature</p>
-          <button>Delete</button>
-        </div>
-
-        <div class="category">
-          <p>Vancouver</p>
-          <button>Delete</button>
-        </div>
-        <h1>New Category</h1>
-        <form action="">
-          <label for=""><input type="text" /></label>
-        </form>
-      </div>
       <!-- END HTML BUILD AREA -->
 
       <!-- LOGIN CARD -->
@@ -109,6 +85,7 @@
     ></script>
 
     <!-- internal js -->
+    <script src="./scripts/lib/managecategories.js"></script>
     <script src="./scripts/lib/searchresources.js"></script>
     <script src="./scripts/lib/newresource.js"></script>
     <script src="./scripts/lib/individualresource.js"></script>

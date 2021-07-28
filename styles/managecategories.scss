@@ -1,0 +1,56 @@
+$background-color: #ffffff;
+$primary-color: #e60024;
+$primary-color-dark: rgb(153, 0, 0);
+$secondary-color-accent: rgb(207, 207, 207);
+
+*,
+*::before,
+*::after {
+  // border: 1px solid black;
+}
+
+.category-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    padding: 1rem;
+    border-radius: 5px;
+    border: 2px solid black;
+    width: 300px;
+  }
+
+  .create-category-btn {
+    padding: 1rem;
+    font-weight: bold;
+    border: 2px solid black;
+  }
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  width: 300px;
+  border: 2px solid black;
+  border-radius: 5px;
+
+  p {
+    margin-left: 1rem;
+  }
+
+  button {
+    border-radius: 5px;
+    border: none;
+    padding: 0 1em;
+    font-weight: bold;
+  }
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: $secondary-color-accent;
+}

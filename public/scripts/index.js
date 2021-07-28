@@ -29,17 +29,25 @@ $(document).ready(() => {
       });
   });
 
-  // show all resources created when 'explore' is clicked
-  $("#explore").click((e) => {
-    e.preventDefault();
-    renderAllResources();
-  });
-
   // render users collection of resources
   // user-collection.js
   $("#user-collection").click((e) => {
     e.preventDefault();
     renderCollectionPage();
+  });
+
+  // render category management page
+  $("#manage-categories").click((e) => {
+    e.preventDefault();
+
+    // fake data
+    const data = [
+      { id: 1, name: "Space" },
+      { id: 2, name: "Travel" },
+      { id: 3, name: "Nature" },
+      { id: 4, name: "Vancouver" },
+    ];
+    renderManageCategoriesPage(data);
   });
 
   // render form to create new resource
@@ -51,7 +59,9 @@ $(document).ready(() => {
   // render resources from search from user
   $("#search-user-resources").submit((e) => {
     e.preventDefault();
-    renderSearchedUsersResources();
+
+    // get users categories
+    renderSearchedUsersResources(data);
   });
 });
 

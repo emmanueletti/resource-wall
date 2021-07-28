@@ -23,7 +23,7 @@
 
 [ ] communicate to users on front end to let them know a resource has already been liked
 
-[ ] create a new category
+[x] create a new category
 
 [ ] when creating a new resource, have the categories programmatically updated from users list of category names
 
