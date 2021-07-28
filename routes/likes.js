@@ -26,6 +26,29 @@ module.exports = (db) => {
         res.status(500).json({ error: e.message });
       });
   });
+  router.delete("/", (req, res) => {
+    const { user_id } = req.session;
+    const { resource_id } = req.body;
+    db.query(
+      `
+    DELETE FROM likes
+    WHERE user_id = $1
+      AND resource_id = $2`,
+      [user_id, resource_id]
+    )
+      .then(() =>
+        db.query(
+          "SELECT id, user_id, resource_id FROM likes WHERE resource_id = $1",
+          [resource_id]
+        )
+      )
+      .then((data) => {
+        res.json(data.rows);
+      })
+      .catch((e) => {
+        res.status(500).json({ error: e.message });
+      });
+  });
   router.get("/search", (request, response) => {
     const { u, res } = request.query;
     if (u) {

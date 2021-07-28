@@ -31,7 +31,7 @@
 - [x] correct the map for `POST /categories` to reflect the expectations
 - [x] update `GET /likes/search` to return an array of likes for a given `?res=id`
 - [x] update `POST /likes` to return an array of likes for the resource
-- [ ] add `DELETE /likes` to delete the like for the given `resource_id`, returning the updated array of likes
+- [x] add `DELETE /likes` to delete the like for the given `resource_id`, returning the updated array of likes
 - [ ] update `POST /ratings` returning an array of all ratings for the rosource
 - [ ] add `PUT /ratings` to update the rating and return the array of ratings
 - [ ] add `GET /categories` to return an array of categories for the signed-in user
@@ -69,13 +69,13 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /api/comments/search?res`             | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                      |
 | `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                     |
 | `POST /api/likes`                          | `{resource_id: Number}`                      | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
+| `DELETE /api/likes`                        | `{resource_id: Number}`                      | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `GET /api/likes/search?u`                  | `?user_id: Number`                           | `[...{res_id: Number, url, title, description, created_at: Timestamp, user_id: Number}]`                                                  |
+| `GET /api/likes/search?res`                | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `GET /mywall`                              | Cookie                                       | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp}]`                                    |
 | `GET /api/userinfo`                        | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                  |
 | `GET /api/users`                           | Nothing                                      | `[...{user_name}]`                                                                                                                        |
-| `GET /api/likes/search?res`                | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | work in progress                           |
-| `DELETE /api/likes`                        | `{resource_id: Number}`                      | `[...{id: Number, user_id: Number, resource_id: Number}]`                                                                                 |
 | `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `PUT /api/ratings`                         | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `GET /api/categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |

@@ -128,6 +128,20 @@ describe("server", () => {
         })
         .end(done);
     });
+    it("deletes the like on DELETE to /likes, returns an array of likes for the resource", (done) => {
+      agent
+        .delete("/api/likes")
+        .send({ resource_id: 30 })
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(({ user_id }) => user_id === 30) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Trouble on DELETE to /api/likes");
+        })
+        .end(done);
+    });
     it("returns an array of liked resources on GET to /search for the given user_id", (done) => {
       agent
         .get("/api/likes/search?u=5")
