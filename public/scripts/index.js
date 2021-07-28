@@ -6,19 +6,13 @@ $(document).ready(() => {
     $(".nav__dropdown-menu").slideToggle();
   });
 
-  const usernames = [
-    { user_name: "bobby" },
-    { user_name: "bobba" },
-    { user_name: "casey" },
-    { user_name: "hansel" },
-  ];
-  // get user names for search bar
-  usernames.forEach((name) => {
-    const option = document.createElement("option");
-    option.value = name["user_name"];
-    console.log(option);
-    $("#users-datalist").prepend(option);
-    console.log($("#users-datalist").children());
+  // get all user names for search bar
+  $.get("/api/users").done((data) => {
+    data.forEach((name) => {
+      const option = document.createElement("option");
+      option.value = name["user_name"];
+      $("#users-datalist").prepend(option);
+    });
   });
 
   // set the user cookie to a desired user
