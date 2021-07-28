@@ -4,9 +4,9 @@
 
 ### Completetion Goal: End of Day July 28
 
-[ ] for "/mywall" arrange resources to display resources from most recently created to oldest on the front end
+[x] for "/mywall" arrange resources to display resources from most recently created to oldest on the front end
 
-[ ] when searching for another users resources, arrange resources to display resources from most recently created to oldest on the front end
+[x] when searching for another users resources, arrange resources to display resources from most recently created to oldest on the front end
 
 [ ] add like and average rating counter that refreshes with each new like and rating
 
@@ -23,6 +23,8 @@
 [ ] give ability for user to assign resource to categories
 
 [ ] give ability for user to sort their "/mywall" page by categories
+
+[ ] write front end tests (oops)
 
 ## Stretch (if we have time)
 
