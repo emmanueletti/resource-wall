@@ -129,7 +129,7 @@ const buildCommentsSection = (data) => {
     commentsCard.appendChild(commentText);
     commentsCard.appendChild(document.createElement("hr"));
 
-    commentsContainer.appendChild(commentsCard);
+    commentsContainer.prepend(commentsCard);
   });
 
   const resourceCommentsContainer = document.createElement("div");
@@ -147,29 +147,32 @@ const renderResourcePage = (resourceData, commentsData) => {
   $(".container").empty();
 
   // 2 - build resource card with data given
-  $(".container").append(buildIndividualResource(resourceData));
+  $(".container").prepend(buildIndividualResource(resourceData));
 
   // 3 - build comment card with data given
   $(".container").append(buildCommentsSection(commentsData));
 
   // load event listeners
   // create a new comment and refresh comments section with new data
-
   $(".comments__form").submit((e) => {
     e.preventDefault();
 
     // create comment
-
     const resId = $(".resource__info").data().resourceId;
     const comment = $(`textarea`).val();
     const commentFormData = {
       resource_id: Number(resId),
       content: comment,
     };
-    console.log(commentFormData);
+
+    // post request to create comment
     $.post("/api/comments", commentFormData)
       .done((data) => {
-        console.log(data);
+        // refresh the comments section
+        $.get(`/api/comments/search?res=${resId}`).then((data) => {
+          $(".resource__comments").remove();
+          $(".container").append(buildCommentsSection(data));
+        });
       })
       .fail((err) => {
         console.log(err.stack);
