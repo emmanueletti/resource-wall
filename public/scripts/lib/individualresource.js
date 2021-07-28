@@ -80,6 +80,39 @@ const buildIndividualResource = (data) => {
   return resourceCard;
 };
 
+/**
+ * Function build the HTML markup for an individual comment
+ * @param {Object} comment - object representing an individual comment
+ * @returns {HTMLDivElement} an HTML object representing the markup for a single comment
+ */
+const buildIndividualComment = (comment) => {
+  const { created_at: timestamp, user_name: user, content } = comment;
+
+  const commentCardUserName = document.createElement("h4");
+  commentCardUserName.appendChild(document.createTextNode(`@${user}`));
+
+  const commentCardCreatedDate = document.createElement("p");
+  commentCardCreatedDate.className = "created_at";
+  commentCardCreatedDate.appendChild(
+    document.createTextNode(timeago.format(timestamp))
+  );
+
+  const commentCardHeader = document.createElement("header");
+  commentCardHeader.appendChild(commentCardUserName);
+  commentCardHeader.appendChild(commentCardCreatedDate);
+
+  const commentText = document.createElement("p");
+  commentText.appendChild(document.createTextNode(content));
+
+  const commentsCard = document.createElement("div");
+  commentsCard.className = "comments__card";
+  commentsCard.appendChild(commentCardHeader);
+  commentsCard.appendChild(commentText);
+  commentsCard.appendChild(document.createElement("hr"));
+
+  return commentsCard;
+};
+
 const buildCommentsSection = (data) => {
   const commentTextArea = document.createElement("textarea");
   commentTextArea.setAttribute("type", "text");
@@ -96,40 +129,11 @@ const buildCommentsSection = (data) => {
   commentForm.appendChild(commentBtn);
 
   // comments card / container
-
   const commentsContainer = document.createElement("div");
   commentsContainer.classList = "comments__container";
 
   data.forEach((comment) => {
-    const { created_at: timestamp, user_id: user, content } = comment;
-
-    const commentCardUserName = document.createElement("h4");
-    commentCardUserName.appendChild(
-      document.createTextNode(
-        `@id:${user} - Need user_id converted to username`
-      )
-    );
-
-    const commentCardCreatedDate = document.createElement("p");
-    commentCardCreatedDate.className = "created_at";
-    commentCardCreatedDate.appendChild(
-      document.createTextNode(timeago.format(timestamp))
-    );
-
-    const commentCardHeader = document.createElement("header");
-    commentCardHeader.appendChild(commentCardUserName);
-    commentCardHeader.appendChild(commentCardCreatedDate);
-
-    const commentText = document.createElement("p");
-    commentText.appendChild(document.createTextNode(content));
-
-    const commentsCard = document.createElement("div");
-    commentsCard.className = "comments__card";
-    commentsCard.appendChild(commentCardHeader);
-    commentsCard.appendChild(commentText);
-    commentsCard.appendChild(document.createElement("hr"));
-
-    commentsContainer.prepend(commentsCard);
+    commentsContainer.prepend(buildIndividualComment(comment));
   });
 
   const resourceCommentsContainer = document.createElement("div");
@@ -168,11 +172,8 @@ const renderResourcePage = (resourceData, commentsData) => {
     // post request to create comment
     $.post("/api/comments", commentFormData)
       .done((data) => {
-        // refresh the comments section
-        $.get(`/api/comments/search?res=${resId}`).then((data) => {
-          $(".resource__comments").remove();
-          $(".container").append(buildCommentsSection(data));
-        });
+        // add the newly created comment to the page
+        $(".comments__container").prepend(buildIndividualComment(data[0]));
       })
       .fail((err) => {
         console.log(err.stack);
