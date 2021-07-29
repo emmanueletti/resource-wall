@@ -119,17 +119,21 @@ const buildResourceCard = (resource) => {
   resourceCardImgDiv.className = "resource-card__image";
   resourceCardImgDiv.appendChild(resourceCardImg);
 
-  const resourceCardTitleH3 = document.createElement("h3");
-  resourceCardTitleH3.className = "resource__card-title";
-  resourceCardTitleH3.appendChild(document.createTextNode(resource.title));
+  const resourceCardTitle = document.createElement("h3");
+  resourceCardTitle.className = "resource__card-title";
+  resourceCardTitle.appendChild(document.createTextNode(resource.title));
 
-  const resourceCardIcons = document.createElement("div");
-  resourceCardIcons.classList = "resource-card__icons";
-  resourceCardIcons.innerHTML = `
-    <i class="far fa-heart"></i>
-    <i class="fas fa-star-half-alt"></i>
-    <i class="fas fa-comment-alt"></i>
-  `;
+  const resourceDescription = document.createElement("div");
+  resourceDescription.className = "resource-card__description";
+  resourceDescription.appendChild(
+    document.createTextNode(resource.description)
+  );
+  // resourceCardIcons.classList = "resource-card__icons";
+  // resourceCardIcons.innerHTML = `
+  //   <i class="far fa-heart"></i>
+  //   <i class="fas fa-star-half-alt"></i>
+  //   <i class="fas fa-comment-alt"></i>
+  // `;
 
   const resourceCardBtn = document.createElement("a");
   resourceCardBtn.setAttribute("href", "#");
@@ -140,8 +144,9 @@ const buildResourceCard = (resource) => {
   resourceCardDiv.className = "resource-card";
   resourceCardDiv.dataset.resourceId = `${resource["res_id"]}`;
   resourceCardDiv.appendChild(resourceCardImgDiv);
-  resourceCardDiv.appendChild(resourceCardTitleH3);
-  resourceCardDiv.appendChild(resourceCardIcons);
+  resourceCardDiv.appendChild(resourceCardTitle);
+  resourceCardDiv.appendChild(resourceDescription);
+  // resourceCardDiv.appendChild(resourceCardIcons);
   resourceCardDiv.appendChild(resourceCardBtn);
 
   return resourceCardDiv;

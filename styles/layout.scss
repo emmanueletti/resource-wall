@@ -240,6 +240,13 @@ nav {
     width: 100%;
   }
 
+  .resource-card__description {
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    color: grey;
+    min-height: 4rem;
+  }
+
   &:hover {
     transform: scale(1.03);
     cursor: pointer;
@@ -248,6 +255,7 @@ nav {
   a {
     color: black;
     text-decoration: none;
+    width: 100%;
 
     &:hover {
       color: $primary-color-dark;
@@ -257,16 +265,16 @@ nav {
   }
 }
 
-.resource-card__icons {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1rem;
+// .resource-card__icons {
+//   display: flex;
+//   justify-content: space-around;
+//   margin-bottom: 1rem;
 
-  i:hover {
-    cursor: pointer;
-    color: goldenrod;
-  }
-}
+//   i:hover {
+//     cursor: pointer;
+//     color: goldenrod;
+//   }
+// }
 
 .created-resources,
 .liked-resources {
