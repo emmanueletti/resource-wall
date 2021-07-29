@@ -21,9 +21,9 @@ const renderManageCategoriesPage = (data) => {
   categoryContainer.className = "category-container";
   categoryContainer.innerHTML = `
     <h1>New Category</h1>
-    <form action="">
+    <form action="" id="create-category-form">
       <label for=""></label>
-      <input type="text" />
+      <input type="text" name="name" />
       <button class="create-category-btn" type="submit">Create</button>
     </form>
     <div class="newly-created"></div>
@@ -48,6 +48,12 @@ const renderManageCategoriesPage = (data) => {
     // send delete req to backend
     const category = deleteBtn.closest(".category");
     const categoryID = $(category).data("catId");
+    $.ajax("/api/categories", {
+      data: { id: categoryID },
+      method: "DELETE",
+    }).fail((err) => {
+      console.log(err.stack);
+    });
 
     // remove element from DOM
     deleteBtn.closest(".category").remove();
@@ -61,10 +67,11 @@ const renderManageCategoriesPage = (data) => {
     if (!createCategory) return;
 
     // POST req to backend with newly created element returned
-    const fakeReturnData = [{ id: 5, name: "Work" }];
-
-    // render data to page - new category will be added at right underneath the create-category input so user can see the categorie they have just created
-    // then on page refresh newly created category will be alphabetically ordered with the others
-    $(".newly-created").prepend(createCategoryCard(fakeReturnData[0]));
+    const dataObj = $("#create-category-form").serialize();
+    $.post("/api/categories", dataObj).done((data) => {
+      // render data to page - new category will be added at right underneath the create-category input so user can see the categorie they have just created
+      // then on page refresh newly created category will be alphabetically ordered with the others
+      $(".newly-created").prepend(createCategoryCard(data[0]));
+    });
   });
 };
