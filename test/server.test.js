@@ -63,6 +63,26 @@ describe("server", () => {
         })
         .end(done);
     });
+    it("returns an array of categories for the signed-in user on GET", (done) => {
+      agent
+        .get("/api/categories")
+        .expect(200)
+        .expect((res) => {
+          if (res.body.every(({ name }) => name === res.body[0].name))
+            throw new Error("Trouble on GET to /api/categories");
+        })
+        .end(done);
+    });
+    it("returns an array of categories for the given resource_id and signed-in user on GET to /search?res", (done) => {
+      agent
+        .get("/api/categories/search?res=39")
+        .expect(200)
+        .expect((res) => {
+          if (res.body.some(({ res_id }) => res_id !== res.body[0].res_id))
+            throw new Error("Trouble on GET to /api/categories/search");
+        })
+        .end(done);
+    });
   });
   describe("/api/categories_resources", () => {
     it("creates a new connection on POST, returns the connection data", (done) => {
@@ -73,6 +93,23 @@ describe("server", () => {
         .expect((res) => {
           if (res.body[0].resource_id !== 42)
             throw new Error("Assertion failed");
+        })
+        .end(done);
+    });
+    it("returns an array of connections for the given category_id on GET to /search?cat", (done) => {
+      agent
+        .get("/api/categories_resources/search?cat=3")
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(
+              ({ category_id }) => category_id !== res.body[0].category_id
+            ) ||
+            res.body.every(
+              ({ resource_id }) => resource_id === res.body[0].resource_id
+            )
+          )
+            throw new Error("Trouble on GET /categories_resources/search");
         })
         .end(done);
     });
@@ -101,26 +138,65 @@ describe("server", () => {
     });
   });
   describe("/api/ratings", () => {
-    it("creates a new rating on POST, returns the rating data", (done) => {
+    it("creates a new rating on POST, returns an array of ratings for the resource", (done) => {
       agent
         .post("/api/ratings")
-        .send({ resource_id: 42, value: 3 })
+        .send({ resource_id: 39, value: 3 })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].user_id !== 1 || res.body[0].value !== 3)
-            throw new Error("FAIL");
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 39) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Trouble on POST to /api/ratings");
+        })
+        .end(done);
+    });
+    it("updates the rating on PUT, returns an array of ratings for the resource", (done) => {
+      agent
+        .put("/api/ratings")
+        .send({ resource_id: 39, value: 5 })
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 39) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id) ||
+            !res.body.some(
+              ({ resource_id, user_id, value }) =>
+                resource_id === 39 && user_id === 1 && value === 5
+            )
+          )
+            throw new Error("Trouble on PUT to /api/ratings");
         })
         .end(done);
     });
   });
   describe("/api/likes", () => {
-    it("creates a new like on POST to /likes, returns the new like data", (done) => {
+    it("creates a new like on POST to /likes, returns an array of likes for the resource", (done) => {
       agent
         .post("/api/likes")
-        .send({ resource_id: 42 })
+        .send({ resource_id: 30 })
         .expect(200)
         .expect((res) => {
-          if (!res.body[0].id) throw new Error("Fail");
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 30) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Trouble on POST to /api/likes");
+        })
+        .end(done);
+    });
+    it("deletes the like on DELETE to /likes, returns an array of likes for the resource", (done) => {
+      agent
+        .delete("/api/likes")
+        .send({ resource_id: 30 })
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(({ user_id }) => user_id === 30) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Trouble on DELETE to /api/likes");
         })
         .end(done);
     });
@@ -131,6 +207,19 @@ describe("server", () => {
         .expect((res) => {
           if (!Array.isArray(res.body) || res.body[0].user_id !== 5)
             throw new Error("FAIL");
+        })
+        .end(done);
+    });
+    it("returns an array of likes on GET to /search for the given res_id", (done) => {
+      agent
+        .get("/api/likes/search?res=20")
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 20) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id)
+          )
+            throw new Error("Check /likes/search?res");
         })
         .end(done);
     });
