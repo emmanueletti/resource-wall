@@ -128,12 +128,6 @@ const buildResourceCard = (resource) => {
   resourceDescription.appendChild(
     document.createTextNode(resource.description)
   );
-  // resourceCardIcons.classList = "resource-card__icons";
-  // resourceCardIcons.innerHTML = `
-  //   <i class="far fa-heart"></i>
-  //   <i class="fas fa-star-half-alt"></i>
-  //   <i class="fas fa-comment-alt"></i>
-  // `;
 
   const resourceCardBtn = document.createElement("a");
   resourceCardBtn.setAttribute("href", "#");

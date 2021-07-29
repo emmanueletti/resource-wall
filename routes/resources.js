@@ -46,7 +46,7 @@ module.exports = (db) => {
       LEFT JOIN users ON users.id = resources.user_id
       LEFT JOIN ratings ON resources.id = ratings.resource_id
       LEFT JOIN likes ON resources.id = likes.resource_id
-    WHERE users.name LIKE $1::varchar
+    WHERE LOWER(users.name) LIKE $1
     GROUP BY resources.id,
       users.id`,
       [`%${u.toLowerCase()}%`]

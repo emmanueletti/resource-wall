@@ -4,6 +4,7 @@
  * @returns {HTMLDivElement} an HTML div element to attach to the DOM element acting as the container for the page
  */
 const buildSearchResultPage = (data) => {
+  console.log(data);
   const searchedUsersName = document.createElement("span");
   searchedUsersName.appendChild(
     document.createTextNode(`${data[0]["auth_name"]}`)
@@ -17,7 +18,7 @@ const buildSearchResultPage = (data) => {
   searchCollection.className = "search-collection";
   // build individual resource cards
   data.forEach((resource) => {
-    buildResourceCard(searchCollection, resource);
+    searchCollection.appendChild(buildResourceCard(resource));
   });
 
   const searchContainer = document.createElement("div");
@@ -40,7 +41,6 @@ const renderSearchedUsersResources = () => {
 
   $.get(`/api/resources/search/?u=${username}`)
     .done((data) => {
-      console.log("data from get search req", data);
       // display error if no resources returned from server
       if (!data.length) {
         $(".container").html(
