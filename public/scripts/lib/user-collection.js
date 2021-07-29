@@ -34,6 +34,7 @@ const addDelegatedResourceEvent = (container) => {
     Promise.all([resourcePromise, commentPromise]).then(
       ([resourceData, commentData]) => {
         renderResourcePage(resourceData, commentData);
+        mountResourcePageEventListeners();
       }
     );
   });
@@ -48,15 +49,13 @@ const buildUserCard = (data) => {
   // user card - user name
   const userCardName = document.createElement("h1");
   userCardName.className = "user-card__name";
-  const userCardNameText = document.createTextNode(data.name);
-  userCardName.appendChild(userCardNameText);
+  userCardName.appendChild(document.createTextNode(data.name));
 
   // user card - num of resources created stat
   const userCardCreatedStat = document.createElement("span");
-  const userCardCreatedStatContent = document.createTextNode(
-    data["total_created_resources"]
+  userCardCreatedStat.appendChild(
+    document.createTextNode(data["total_created_resources"])
   );
-  userCardCreatedStat.appendChild(userCardCreatedStatContent);
   const userCardBioCreated = document.createElement("p");
   userCardBioCreated.className = "user-card__bio";
   userCardBioCreated.appendChild(userCardCreatedStat);
@@ -69,10 +68,9 @@ const buildUserCard = (data) => {
 
   // user card - num of resources liked stat
   const userCardLikedStat = document.createElement("span");
-  const userCardLikedStatContent = document.createTextNode(
-    data["total_liked_resources"]
+  userCardLikedStat.appendChild(
+    document.createTextNode(data["total_liked_resources"])
   );
-  userCardLikedStat.appendChild(userCardLikedStatContent);
   const userCardBioLiked = document.createElement("p");
   userCardBioLiked.className = "user-card__bio";
   userCardBioLiked.appendChild(userCardLikedStat);
@@ -102,11 +100,11 @@ const buildUserCard = (data) => {
 // can we refactor this function to seperate the creation of the card and attachement to a container?
 
 /**
- * Function that builds the HTML markup for an individual resource card and attaches it to a container
- * @param {Object} container
- * @param {Object} resource
+ * Function that builds the HTML markup for an individual resource card
+ * @param {Object} resource an object with all the data for a resource card
+ * @returns {HTMLElement} HTML markup for an individual resource card
  */
-const buildResourceCard = (container, resource) => {
+const buildResourceCard = (resource) => {
   // generate random number between 1000 and 2000 so unsplash image is unique for each card
   let imgDimensions = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
   const resourceCardImg = document.createElement("img");
@@ -122,8 +120,7 @@ const buildResourceCard = (container, resource) => {
 
   const resourceCardTitleH3 = document.createElement("h3");
   resourceCardTitleH3.className = "resource__card-title";
-  const resourceCardTitle = document.createTextNode(resource.title);
-  resourceCardTitleH3.appendChild(resourceCardTitle);
+  resourceCardTitleH3.appendChild(document.createTextNode(resource.title));
 
   const resourceCardIcons = document.createElement("div");
   resourceCardIcons.classList = "resource-card__icons";
@@ -135,8 +132,7 @@ const buildResourceCard = (container, resource) => {
 
   const resourceCardBtn = document.createElement("a");
   resourceCardBtn.setAttribute("href", "#");
-  const resourceCardBtnText = document.createTextNode("Expand");
-  resourceCardBtn.appendChild(resourceCardBtnText);
+  resourceCardBtn.appendChild(document.createTextNode("Expand"));
 
   // assemble resource card
   const resourceCardDiv = document.createElement("div");
@@ -147,7 +143,7 @@ const buildResourceCard = (container, resource) => {
   resourceCardDiv.appendChild(resourceCardIcons);
   resourceCardDiv.appendChild(resourceCardBtn);
 
-  container.appendChild(resourceCardDiv);
+  return resourceCardDiv;
 };
 
 const buildCreatedResources = (data) => {
@@ -163,7 +159,7 @@ const buildCreatedResources = (data) => {
 
   // build inidividual resource cards
   data.forEach((resource) => {
-    buildResourceCard(resourcesContainer, resource);
+    resourcesContainer.append(buildResourceCard(resource));
   });
 
   const createdResourcesCollection = document.createElement("div");
@@ -188,7 +184,7 @@ const buildLikedResources = (data) => {
 
   // build inidividual resource cards
   data.forEach((resource) => {
-    buildResourceCard(resourcesContainer, resource);
+    resourcesContainer.appendChild(buildResourceCard(resource));
   });
 
   const likedResourcesCollection = document.createElement("div");
