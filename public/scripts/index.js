@@ -40,14 +40,14 @@ $(document).ready(() => {
   $("#manage-categories").click((e) => {
     e.preventDefault();
 
-    // fake data
-    const fakeData = [
-      { id: 1, name: "Space" },
-      { id: 2, name: "Travel" },
-      { id: 3, name: "Nature" },
-      { id: 4, name: "Vancouver" },
-    ];
-    renderManageCategoriesPage(fakeData);
+    // get users categories from backend
+    $.get("/api/categories")
+      .done((data) => {
+        renderManageCategoriesPage(data);
+      })
+      .fail((err) => {
+        console.log(err.stack);
+      });
   });
 
   // render form to create new resource

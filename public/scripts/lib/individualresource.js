@@ -54,7 +54,7 @@ const buildIndividualResource = (data) => {
   resourceControls.innerHTML = `
     <div class="resource__like">
       <span id="like-btn" ><i class="fas fa-thumbs-up"></i></span>
-      <span><span id="like-counter">null</span> Likes</span>
+      <span><span id="like-counter">0</span> Likes</span>
     </div>
     <div class="resource__rate">
       <select name="rating" id="rate-select">
@@ -65,7 +65,7 @@ const buildIndividualResource = (data) => {
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <span><span id="avg-rating">null</span>/5 avg</span>
+      <span><span id="avg-rating">null</span>/5.0 avg</span>
     </div>
     <div class="resource_category">
       <select name="category" id="category-select">
@@ -155,6 +155,7 @@ const buildCommentsSection = (data) => {
 };
 
 const renderResourcePage = (resourceData, commentsData) => {
+  console.log(resourceData);
   // empty pages container
   $(".container").empty();
 
@@ -164,13 +165,60 @@ const renderResourcePage = (resourceData, commentsData) => {
   // 3 - build comment card with data given
   $(".container").append(buildCommentsSection(commentsData));
 
-  // 4 - update resource current category
+  // can the update code be encapsulated in thier own "updateResourceData" function?
+  // 4 - update the resources currently assigned category for logged in user
   // get request
-  // if data is empty return
-  // if date is not empty then update front end with new category
-  // $("#resource-category").empty().append(document.createTextNode(data));
+  // CHANGE TO ONLY DISPLAY THE MOST RECENTLY ASSIGNED CATEGORY
+  const resID = $(".resource__info").data("resourceId");
+  $.get(`/api/categories/search?res=${resID}`)
+    .done((data) => {
+      if (data.length === 0) return;
+      // sort for the most recently assigned category (the one with the highest cat_res_id)
+      //
+      // display the name of that assigned category
+      $("#resource-category")
+        .empty()
+        .append(document.createTextNode(data[0].name));
 
-  // MOUNT EVENT LISTENERS
+      // add that unique categories_resource join id to the HTML
+      $("#resource-category").data("cat_res_id", data[0].cat_res_id);
+    })
+    .fail((err) => {
+      err.stack;
+    });
+
+  // 5 - update the users category options
+  $.get("/api/categories")
+    .done((data) => {
+      data.forEach((category) => {
+        $("#category-select").append(createCategoryOption(category));
+      });
+    })
+    .fail((err) => {
+      console.log(err.stack);
+    });
+
+  // 6 - update the resources likes
+  // get reqest for resource likes
+  console.log(resID);
+  $.get(`/api/likes/search?res=${resID}`)
+    .done((data) => {
+      if (!data.length) return;
+      $("#like-counter").empty().append(document.createTextNode(data.length));
+    })
+    .fail((err) => {
+      console.log(err.stack);
+    });
+
+  // 7 - update the resources ratings
+  const avgRating = Number(resourceData[0].avg_rating).toFixed(1);
+  $("#avg-rating").empty().append(document.createTextNode(avgRating));
+};
+
+const mountResourcePageEventListeners = () => {
+  // LIKES
+
+  // COMMENTS
   // create a new comment and refresh comments section with new data
   $(".comments__form").submit((e) => {
     e.preventDefault();
@@ -194,42 +242,22 @@ const renderResourcePage = (resourceData, commentsData) => {
       });
   });
 
-  // resource likes
-  // get reqest for resource likes
-  const fakeLikeData = [{}, {}, {}, {}, {}];
-  $("#like-counter")
-    .empty()
-    .append(document.createTextNode(fakeLikeData.length));
-
-  // resource ratings
-  // get ratings data from backend
-  const fakeRateData = 4.33;
-  $("#avg-rating").empty().append(document.createTextNode(fakeRateData));
-
-  // EVENT - resource categories
-  // get users categories from back end
-  const fakeData = [
-    { id: 1, name: "Space" },
-    { id: 2, name: "Travel" },
-    { id: 3, name: "Nature" },
-    { id: 4, name: "Vancouver" },
-  ];
-
-  fakeData.forEach((category) => {
-    $("#category-select").append(createCategoryOption(category));
-  });
-};
-
-const mountResourcePageEventListeners = () => {
-  // LIKES
-  $("#like-btn").click(() => {});
-
   // CATEGORIES
-  // add event listner to POST categoy change and update front end
+  // add event listner to change categories
   $("#category-select").change((e) => {
     const resourceID = $(".resource__info").data("resourceId");
+    const categoryID = $("select#category-select option:checked").data(
+      "categoryId"
+    );
     const categoryPicked = $("select#category-select option:checked").val();
-    //PUT request to backend
+    //POST request to backend
+    const catData = {
+      category_id: Number(categoryID),
+      resource_id: Number(resourceID),
+    };
+    $.post("/api/categories_resources", catData).fail((err) => {
+      err.stack;
+    });
 
     // update front end with new category
     $("#resource-category")

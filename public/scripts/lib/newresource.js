@@ -7,6 +7,7 @@ const createCategoryOption = (optionData) => {
   const option = document.createElement("option");
   option.appendChild(document.createTextNode(optionData.name));
   option.value = optionData.name;
+  option.dataset.categoryId = optionData.id;
   return option;
 };
 
