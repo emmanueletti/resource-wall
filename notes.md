@@ -36,9 +36,10 @@
 - [x] add `PUT /ratings` to update the rating and return the array of ratings
 - [x] add `GET /categories` to return an array of categories for the signed-in user
 - [x] add `GET /categories/search` to return an array of categories for the given `?res=id`
-- [ ] add `GET /categories_resources/search` to return an array of connections for the given `?cat=id`
-- [ ] decide what to do with the categories_resources data
+- [x] add `GET /categories_resources/search` to return an array of connections for the given `?cat=id`
+- [ ] decide what to do with the duplicates in the categories_resources seed
 - [ ] decide if user_id is needed on `GET /categories/search`
+- [ ] ditto for `GET /categories_resources/search`
 - [ ] communicate to the user that a resource is already liked
 
 ## Edge Cases
@@ -60,7 +61,6 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 
 | endpoint                                   | expects                                      | returns                                                                                                                                   |
 | ------------------------------------------ | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| in place                                   |
 | `GET /login`                               | `:id: Number`                                | Cookie, redirect                                                                                                                          |
 | `POST /api/resources`                      | `{url, title, description}`                  | `[{id: Number, user_id: Number, url, title, description, created_at: Timestamp}]`                                                         |
 | `GET /api/resources/search?u`              | `:username: String`                          | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
@@ -69,6 +69,7 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /api/categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |
 | `GET /api/categories/search?res`           | `?res_id: Number`                            | `[...{id: Number, user_id: Number, name, res_id: Number}]`                                                                                |
 | `POST /api/categories_resources`           | `{category_id: Number, resource_id: Number}` | `[{id: Number, category_id: Number, resource_id: Number}]`                                                                                |
+| `GET /api/categories_resources/search?cat` | `?cat_id: Number`                            | `[...{id: Number, category_id: Number, resource_id: Number, user_id: Number}]`                                                            |
 | `POST /api/comments`                       | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`                                                    |
 | `GET /api/comments/search?res`             | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                      |
 | `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
@@ -80,5 +81,3 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /mywall`                              | Cookie                                       | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp}]`                                    |
 | `GET /api/userinfo`                        | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                  |
 | `GET /api/users`                           | Nothing                                      | `[...{user_name}]`                                                                                                                        |
-| work in progress                           |
-| `GET /api/categories_resources/search?cat` | `?cat_id: Number`                            | `[...{id: Number, category_id: Number, resource_id: Number}]`                                                                             |

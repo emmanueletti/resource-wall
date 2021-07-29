@@ -73,7 +73,7 @@ describe("server", () => {
         })
         .end(done);
     });
-    it("returns an array of categories for the given resource_id and signed_in user on GET to /search?res", (done) => {
+    it("returns an array of categories for the given resource_id and signed-in user on GET to /search?res", (done) => {
       agent
         .get("/api/categories/search?res=39")
         .expect(200)
@@ -93,6 +93,23 @@ describe("server", () => {
         .expect((res) => {
           if (res.body[0].resource_id !== 42)
             throw new Error("Assertion failed");
+        })
+        .end(done);
+    });
+    it("returns an array of connections for the given category_id on GET to /search?cat", (done) => {
+      agent
+        .get("/api/categories_resources/search?cat=3")
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(
+              ({ category_id }) => category_id !== res.body[0].category_id
+            ) ||
+            res.body.every(
+              ({ resource_id }) => resource_id === res.body[0].resource_id
+            )
+          )
+            throw new Error("Trouble on GET /categories_resources/search");
         })
         .end(done);
     });
