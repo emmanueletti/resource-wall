@@ -170,7 +170,7 @@ const renderResourcePage = (resourceData, commentsData) => {
   // if date is not empty then update front end with new category
   // $("#resource-category").empty().append(document.createTextNode(data));
 
-  // load event listeners
+  // MOUNT EVENT LISTENERS
   // create a new comment and refresh comments section with new data
   $(".comments__form").submit((e) => {
     e.preventDefault();
@@ -206,7 +206,7 @@ const renderResourcePage = (resourceData, commentsData) => {
   const fakeRateData = 4.33;
   $("#avg-rating").empty().append(document.createTextNode(fakeRateData));
 
-  // resource categories
+  // EVENT - resource categories
   // get users categories from back end
   const fakeData = [
     { id: 1, name: "Space" },
@@ -222,9 +222,7 @@ const renderResourcePage = (resourceData, commentsData) => {
 
 const mountResourcePageEventListeners = () => {
   // LIKES
-  $("#like-btn").click(() => {
-    console.log("smashed the like btn!");
-  });
+  $("#like-btn").click(() => {});
 
   // CATEGORIES
   // add event listner to POST categoy change and update front end
@@ -239,3 +237,9 @@ const mountResourcePageEventListeners = () => {
       .append(document.createTextNode(categoryPicked));
   });
 };
+
+// this page is desperate need for cleanup / refactor
+// decide if ALL event listeners will go in an mounteventlistner function
+// or if everything will be in the render function
+// to protest against async nonsense
+// can also have the render function be passed in the event listner as a callback to call after it has done its building work
