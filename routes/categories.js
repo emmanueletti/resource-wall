@@ -14,6 +14,25 @@ module.exports = (db) => {
       .then((data) => res.json(data.rows))
       .catch((err) => res.status(500).json({ error: err.message }));
   });
+  router.get("/search", (req, res) => {
+    const res_id = req.query.res;
+    const { user_id } = req.session;
+    db.query(
+      `
+SELECT categories.id,
+  categories.user_id,
+  categories.name,
+  resources.id AS res_id
+FROM categories
+  JOIN categories_resources ON categories.id = category_id
+  JOIN resources ON resource_id = resources.id
+WHERE resources.id = $1 and categories.user_id = $2
+      `,
+      [res_id, user_id]
+    )
+      .then((data) => res.json(data.rows))
+      .catch((err) => res.status(500).json({ error: err.message }));
+  });
   router.post("/", (req, res) => {
     const { user_id } = req.session;
     const { name } = req.body;

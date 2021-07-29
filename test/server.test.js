@@ -73,6 +73,16 @@ describe("server", () => {
         })
         .end(done);
     });
+    it("returns an array of categories for the given resource_id and signed_in user on GET to /search?res", (done) => {
+      agent
+        .get("/api/categories/search?res=39")
+        .expect(200)
+        .expect((res) => {
+          if (res.body.some(({ res_id }) => res_id !== res.body[0].res_id))
+            throw new Error("Trouble on GET to /api/categories/search");
+        })
+        .end(done);
+    });
   });
   describe("/api/categories_resources", () => {
     it("creates a new connection on POST, returns the connection data", (done) => {
