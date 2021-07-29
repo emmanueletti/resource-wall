@@ -40,7 +40,7 @@
 - [x] decide what to do with the duplicates in the categories_resources seed
 - [x] decide if user_id is needed on `GET /categories/search`
 - [x] ditto for `GET /categories_resources/search`
-- [ ] add `DELETE /categories` exp `{id: Number}` returns nothing
+- [x] add `DELETE /categories` exp `{id: Number}` returns nothing
 - [ ] add `{user_name}` to the return value of `POST /comments`
 - [ ] add `GET /api/resources/` to returt an array of all resources
 - [ ] communicate to the user that a resource is already liked
@@ -70,10 +70,11 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /api/resources/:id`                   | `:res_id: Number`                            | `[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]`    |
 | `POST /api/categories`                     | `{name: String}`                             | `[{id: Number, user_id: Number, name}]`                                                                                                   |
 | `GET /api/categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |
+| `DELETE /api/categories`                   | `{id: Number}`                               | `204`, nothing                                                                                                                            |
 | `GET /api/categories/search?res`           | `?res_id: Number`                            | `[...{id: Number, user_id: Number, name, res_id: Number}]`                                                                                |
 | `POST /api/categories_resources`           | `{category_id: Number, resource_id: Number}` | `[{id: Number, category_id: Number, resource_id: Number}]`                                                                                |
 | `GET /api/categories_resources/search?cat` | `?cat_id: Number`                            | `[...{id: Number, category_id: Number, resource_id: Number, user_id: Number}]`                                                            |
-| `POST /api/comments`                       | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`                                                    |
+| `POST /api/comments`                       | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                         |
 | `GET /api/comments/search?res`             | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                      |
 | `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `PUT /api/ratings`                         | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
@@ -85,5 +86,4 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /api/userinfo`                        | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                  |
 | `GET /api/users`                           | Nothing                                      | `[...{user_name}]`                                                                                                                        |
 | work in porgress                           |
-| `DELETE /api/categories`                   | `{id: Number}`                               | Nothing                                                                                                                                   |
 | `GET /api/resources/`                      | Nothing                                      | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
