@@ -53,8 +53,8 @@ const buildIndividualResource = (data) => {
   resourceControls.className = "resource__controls";
   resourceControls.innerHTML = `
     <div class="resource__like">
-      <i class="fas fa-thumbs-up"></i>
-      <span class="like__counter">?? Likes</span>
+      <span id="like-btn" ><i class="fas fa-thumbs-up"></i></span>
+      <span><span id="like-counter">null</span> Likes</span>
     </div>
     <div class="resource__rate">
       <select name="rating" id="rate-select">
@@ -65,7 +65,7 @@ const buildIndividualResource = (data) => {
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <span id="average-rating">??/5 avg</span>
+      <span><span id="avg-rating">null</span>/5 avg</span>
     </div>
     <div class="resource_category">
       <select name="category" id="category-select">
@@ -194,11 +194,19 @@ const renderResourcePage = (resourceData, commentsData) => {
       });
   });
 
-  // like resource
+  // resource likes
+  // get reqest for resource likes
+  const fakeLikeData = [{}, {}, {}, {}, {}];
+  $("#like-counter")
+    .empty()
+    .append(document.createTextNode(fakeLikeData.length));
 
-  // rate resource
+  // resource ratings
+  // get ratings data from backend
+  const fakeRateData = 4.33;
+  $("#avg-rating").empty().append(document.createTextNode(fakeRateData));
 
-  // categories
+  // resource categories
   // get users categories from back end
   const fakeData = [
     { id: 1, name: "Space" },
@@ -210,7 +218,15 @@ const renderResourcePage = (resourceData, commentsData) => {
   fakeData.forEach((category) => {
     $("#category-select").append(createCategoryOption(category));
   });
+};
 
+const mountResourcePageEventListeners = () => {
+  // LIKES
+  $("#like-btn").click(() => {
+    console.log("smashed the like btn!");
+  });
+
+  // CATEGORIES
   // add event listner to POST categoy change and update front end
   $("#category-select").change((e) => {
     const resourceID = $(".resource__info").data("resourceId");
