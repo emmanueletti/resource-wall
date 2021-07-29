@@ -6,45 +6,49 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  router.get("/", (req, res) => {
+    db.query(
+      `
+    SELECT resources.id AS res_id,
+      users.id AS auth_id,
+      users.name AS auth_name,
+      resources.url AS url,
+      resources.title AS title,
+      resources.description AS description,
+      resources.created_at AS res_timestamp,
+      round(avg(ratings.value), 2) AS avg_rating,
+      COUNT(DISTINCT likes.id) AS likes
+    FROM resources
+      LEFT JOIN users ON users.id = resources.user_id
+      LEFT JOIN ratings ON resources.id = ratings.resource_id
+      LEFT JOIN likes ON resources.id = likes.resource_id
+    GROUP BY resources.id,
+      users.id
+    `
+    )
+      .then((data) => res.json(data.rows))
+      .catch((e) => res.status(500).json({ error: e.message }));
+  });
   router.get("/search", (req, res) => {
     const { u } = req.query;
     db.query(
       `
-    SELECT m.res_id,
-      m.auth_id,
-      m.auth_name,
-      m.url,
-      m.title,
-      m.description,
-      m.res_timestamp,
-      r.avg_rating,
-      l.likes
-    FROM (
-        SELECT resources.id AS res_id,
-          users.id AS auth_id,
-          users.name AS auth_name,
-          resources.url AS url,
-          resources.title AS title,
-          resources.description AS description,
-          resources.created_at AS res_timestamp
-        FROM resources
-          JOIN users ON users.id = resources.user_id
-        WHERE LOWER(users.name) LIKE $1::varchar
-      ) m
-      JOIN (
-        SELECT resources.id AS res_id,
-          COUNT(likes.id) AS likes
-        FROM resources
-          LEFT JOIN likes ON resources.id = likes.resource_id
-        GROUP BY resources.id
-      ) l ON m.res_id = l.res_id
-      JOIN (
-        SELECT round(avg(value), 2) AS avg_rating,
-          resources.id AS res_id
-        FROM resources
-          LEFT JOIN ratings ON resources.id = ratings.resource_id
-        GROUP BY resources.id
-      ) r ON m.res_id = r.res_id;`,
+    SELECT resources.id AS res_id,
+      users.id AS auth_id,
+      users.name AS auth_name,
+      resources.url AS url,
+      resources.title AS title,
+      resources.description AS description,
+      resources.created_at AS res_timestamp,
+      round(avg(ratings.value), 2) AS avg_rating,
+      COUNT(DISTINCT likes.id) AS likes
+    FROM resources
+      LEFT JOIN users ON users.id = resources.user_id
+      LEFT JOIN ratings ON resources.id = ratings.resource_id
+      LEFT JOIN likes ON resources.id = likes.resource_id
+    WHERE users.name LIKE $1::varchar
+    GROUP BY resources.id,
+      users.id`,
       [`%${u.toLowerCase()}%`]
     )
       .then((data) => res.json(data.rows))
@@ -54,37 +58,22 @@ module.exports = (db) => {
     const { id } = req.params;
     db.query(
       `
-    SELECT m.res_id,
-      m.auth_id,
-      m.auth_name,
-      m.url,
-      m.title,
-      m.description,
-      m.res_timestamp,
-      r.avg_rating,
-      l.likes
-    FROM (
-        SELECT resources.id AS res_id,
-          users.id AS auth_id,
-          users.name AS auth_name,
-          resources.url AS url,
-          resources.title AS title,
-          resources.description AS description,
-          resources.created_at AS res_timestamp
-        FROM resources
-          JOIN users ON resources.user_id = users.id
-        WHERE resources.id = $1
-      ) m,
-      (
-        SELECT COUNT(id) AS likes
-        FROM likes
-        WHERE resource_id = $1
-      ) l,
-      (
-        SELECT round(avg(value), 2) AS avg_rating
-        FROM ratings
-        WHERE resource_id = $1
-      ) r;
+      SELECT resources.id AS res_id,
+      users.id AS auth_id,
+      users.name AS auth_name,
+      resources.url AS url,
+      resources.title AS title,
+      resources.description AS description,
+      resources.created_at AS res_timestamp,
+      round(avg(ratings.value), 2) AS avg_rating,
+      COUNT(DISTINCT likes.id) AS likes
+    FROM resources
+      LEFT JOIN users ON users.id = resources.user_id
+      LEFT JOIN ratings ON resources.id = ratings.resource_id
+      LEFT JOIN likes ON resources.id = likes.resource_id
+    WHERE resources.id = $1
+    GROUP BY resources.id,
+      users.id
     `,
       [id]
     )

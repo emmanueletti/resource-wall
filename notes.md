@@ -41,9 +41,8 @@
 - [x] decide if user_id is needed on `GET /categories/search`
 - [x] ditto for `GET /categories_resources/search`
 - [x] add `DELETE /categories` exp `{id: Number}` returns nothing
-- [ ] add `{user_name}` to the return value of `POST /comments`
-- [ ] add `GET /api/resources/` to returt an array of all resources
-- [ ] communicate to the user that a resource is already liked
+- [x] add `{user_name}` to the return value of `POST /comments`
+- [x] add `GET /api/resources/` to returt an array of all resources
 
 ## Edge Cases
 
@@ -65,6 +64,7 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | endpoint                                   | expects                                      | returns                                                                                                                                   |
 | ------------------------------------------ | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `GET /login`                               | `:id: Number`                                | Cookie, redirect                                                                                                                          |
+| `GET /api/resources/`                      | Nothing                                      | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
 | `POST /api/resources`                      | `{url, title, description}`                  | `[{id: Number, user_id: Number, url, title, description, created_at: Timestamp}]`                                                         |
 | `GET /api/resources/search?u`              | `:username: String`                          | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
 | `GET /api/resources/:id`                   | `:res_id: Number`                            | `[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]`    |
@@ -85,5 +85,3 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /mywall`                              | Cookie                                       | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp}]`                                    |
 | `GET /api/userinfo`                        | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                  |
 | `GET /api/users`                           | Nothing                                      | `[...{user_name}]`                                                                                                                        |
-| work in porgress                           |
-| `GET /api/resources/`                      | Nothing                                      | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
