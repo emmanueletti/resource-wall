@@ -13,27 +13,27 @@
 - some comment sections for some resources not appearing till afer one comment is made
 - for some resources after a comment is made, making a new comment triggers the default brower refresh/POST request behavior
 
-[ ] add like and average rating counter that refreshes with each new like and rating
-
 [x] add event listener to cards displayed after you search for another users resources
 
 [x] change userid to user name in comments
+
+[x] create a new category
+
+[x] when creating a new resource, have the categories programmatically updated from users list of category names
+
+[x] give ability for user to assign resource to categories
+
+[ ] add like and average rating counter that refreshes with each new like and rating
 
 [ ] add ability to like and rate resources
 
 [ ] communicate to users on front end to let them know a resource has already been liked
 
-[x] create a new category
-
-[ ] when creating a new resource, have the categories programmatically updated from users list of category names
-
-[ ] give ability for user to assign resource to categories
+## Stretch (if we have time)
 
 [ ] give ability for user to sort their "/mywall" page by categories
 
 [ ] write test suite for front end javascript (oops)
-
-## Stretch (if we have time)
 
 [ ] prevent resource creator from liking and rating thier own resource
 

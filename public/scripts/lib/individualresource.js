@@ -208,10 +208,7 @@ const renderResourcePage = (resourceData, commentsData) => {
   ];
 
   fakeData.forEach((category) => {
-    const option = document.createElement("option");
-    option.appendChild(document.createTextNode(category.name));
-    option.value = category.name;
-    $("#category-select").append(option);
+    $("#category-select").append(createCategoryOption(category));
   });
 
   // add event listner to POST categoy change and update front end
