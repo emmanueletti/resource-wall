@@ -34,7 +34,7 @@
 - [x] add `DELETE /likes` to delete the like for the given `resource_id`, returning the updated array of likes
 - [x] update `POST /ratings` to return an array of all ratings for the resource
 - [x] add `PUT /ratings` to update the rating and return the array of ratings
-- [ ] add `GET /categories` to return an array of categories for the signed-in user
+- [x] add `GET /categories` to return an array of categories for the signed-in user
 - [ ] add `GET /categories/search` to return an array of categories for the given `?res=id`
 - [ ] add `GET /categories_resources/search` to return an array of connections for the given `?cat=id`
 - [ ] communicate to the user that a resource is already liked
@@ -64,6 +64,7 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /api/resources/search?u`              | `:username: String`                          | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
 | `GET /api/resources/:id`                   | `:res_id: Number`                            | `[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]`    |
 | `POST /api/categories`                     | `{name: String}`                             | `[{id: Number, user_id: Number, name}]`                                                                                                   |
+| `GET /api/categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |
 | `POST /api/categories_resources`           | `{category_id: Number, resource_id: Number}` | `[{id: Number, category_id: Number, resource_id: Number}]`                                                                                |
 | `POST /api/comments`                       | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`                                                    |
 | `GET /api/comments/search?res`             | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                      |
@@ -77,6 +78,5 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | `GET /api/userinfo`                        | Cookie                                       | `[{name, id: Number, resources: String, likes: String}]`                                                                                  |
 | `GET /api/users`                           | Nothing                                      | `[...{user_name}]`                                                                                                                        |
 | work in progress                           |
-| `GET /api/categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |
 | `GET /api/categories/search?res`           | `?res_id: Number`                            | `[...{id: Number, user_id: Number, name}]`                                                                                                |
 | `GET /api/categories_resources/search?cat` | `?cat_id: Number`                            | `[...{id: Number, category_id: Number, resource_id: Number}]`                                                                             |
