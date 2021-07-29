@@ -29,19 +29,18 @@ const buildSearchResultPage = (data) => {
 };
 
 const renderSearchedUsersResources = () => {
-  const userName = $(".nav__search-bar").val();
+  const username = $(".nav__search-bar").val();
 
-  if (!userName) {
+  if (!username) {
     // implement an error message
     return;
   }
   // can we seperate all ajax / network requests into a seperate "network.js" location?
   // get users collection data
-  $.get(`/api/resources/search/?u=${userName}`)
-    .done((data) => {
-      // empty page
-      $(".container").empty();
 
+  $.get(`/api/resources/search/?u=${username}`)
+    .done((data) => {
+      console.log("data from get search req", data);
       // display error if no resources returned from server
       if (!data.length) {
         $(".container").html(
@@ -54,7 +53,7 @@ const renderSearchedUsersResources = () => {
       sortArrayByDate(data);
 
       // build and render page
-      $(".container").append(buildSearchResultPage(data));
+      $(".container").empty().append(buildSearchResultPage(data));
 
       // add event delegated evet listener to cards container
       const $container = $(".search-container");
