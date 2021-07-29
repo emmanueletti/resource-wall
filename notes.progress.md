@@ -23,7 +23,7 @@
 
 [x] give ability for user to assign resource to categories
 
-[ ] add like and average rating counter that refreshes with each new like and rating
+[x] add like and average rating counter that refreshes with each new like and rating
 
 [ ] add ability to like and rate resources
 
