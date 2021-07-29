@@ -22,6 +22,7 @@ $(document).ready(() => {
     const userID = $("#userID-input").val();
     $.get(`/login/${userID}`)
       .done(() => {
+        sessionStorage.setItem("userID", userID);
         renderCollectionPage();
       })
       .fail((err) => {
