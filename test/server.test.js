@@ -101,7 +101,7 @@ describe("server", () => {
     });
   });
   describe("/api/ratings", () => {
-    it("creates a new rating on POST, returns the rating data", (done) => {
+    it("creates a new rating on POST, returns an array of ratings for the resource", (done) => {
       agent
         .post("/api/ratings")
         .send({ resource_id: 39, value: 3 })
@@ -112,6 +112,24 @@ describe("server", () => {
             res.body.every(({ user_id }) => user_id === res.body[0].user_id)
           )
             throw new Error("Trouble on POST to /api/ratings");
+        })
+        .end(done);
+    });
+    it("updates the rating on PUT, returns an array of ratings for the resource", (done) => {
+      agent
+        .put("/api/ratings")
+        .send({ resource_id: 39, value: 5 })
+        .expect(200)
+        .expect((res) => {
+          if (
+            res.body.some(({ resource_id }) => resource_id !== 39) ||
+            res.body.every(({ user_id }) => user_id === res.body[0].user_id) ||
+            !res.body.some(
+              ({ resource_id, user_id, value }) =>
+                resource_id === 39 && user_id === 1 && value === 5
+            )
+          )
+            throw new Error("Trouble on PUT to /api/ratings");
         })
         .end(done);
     });
