@@ -196,6 +196,14 @@ const updateLikes = (resourceID) => {
     });
 };
 
+const updateRatings = (resourceID) => {
+  $.get(`/api/resources/${resourceID}`).done((data) => {
+    $("#avg-rating")
+      .empty()
+      .append(document.createTextNode(data[0].avg_rating));
+  });
+};
+
 const renderResourcePage = (resourceData, commentsData) => {
   // empty pages container
   $(".container").empty();
@@ -252,7 +260,6 @@ const mountResourcePageEventListeners = () => {
         method: "DELETE",
       })
         .done(() => {
-          console.log("UPDATING LIKES");
           updateLikes(resID);
         })
         .fail((err) => {
@@ -264,7 +271,6 @@ const mountResourcePageEventListeners = () => {
     // if not liked yet - create a new like
     $.post("/api/likes", { resource_id: resID })
       .done(() => {
-        console.log("UPDATING LIKES");
         updateLikes(resID);
       })
       .fail((err) => {
@@ -293,6 +299,40 @@ const mountResourcePageEventListeners = () => {
       .fail((err) => {
         console.log(err.stack);
       });
+  });
+
+  // RATINGS
+  $("#rate-select").change(() => {
+    const ratingPicked = $("select#rate-select option:checked").val();
+
+    if (ratingPicked === "Rate") return;
+
+    // do both post and put
+    // if user has already rated resource, POST req will fail and PUT will run
+    // if user has not rated resource, POST will succeed and return
+    $.post("/api/ratings", { resource_id: resID, value: ratingPicked })
+      .done((data) => {
+        updateRatings(resID);
+        return;
+      })
+      .fail(() => {
+        console.log(
+          "POST Ratings failed. User possible has already rated resource"
+        );
+      });
+
+    $.ajax("/api/ratings", {
+      method: "PUT",
+      data: { resource_id: resID, value: ratingPicked },
+    })
+      .done(() => {
+        updateRatings(resID);
+      })
+      .fail((err) => {
+        console.log(err.stack);
+      });
+
+    // update rating counter
   });
 
   // CATEGORIES

@@ -25,9 +25,9 @@
 
 [x] add like and average rating counter that refreshes with each new like and rating
 
-[ ] add ability to like and rate resources
+[x] add ability to like and rate resources
 
-[ ] communicate to users on front end to let them know a resource has already been liked
+[x] communicate to users on front end to let them know a resource has already been liked
 
 ## Stretch (if we have time)
 
