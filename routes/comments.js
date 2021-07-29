@@ -28,9 +28,25 @@ WHERE resource_id = $1`,
     const { user_id } = req.session;
     const { resource_id, content } = req.body;
     db.query(
-      "INSERT INTO comments (user_id, resource_id, content) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO comments (user_id, resource_id, content) VALUES ($1, $2, $3) RETURNING id",
       [user_id, resource_id, content]
     )
+      .then((data) =>
+        db.query(
+          `
+SELECT comments.id,
+  comments.user_id,
+  comments.resource_id,
+  comments.content,
+  comments.created_at,
+  users.name AS user_name
+FROM comments
+  JOIN users ON user_id = users.id
+WHERE comments.id = $1
+    `,
+          [data.rows[0].id]
+        )
+      )
       .then((data) => {
         res.json(data.rows);
       })

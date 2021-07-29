@@ -37,10 +37,12 @@
 - [x] add `GET /categories` to return an array of categories for the signed-in user
 - [x] add `GET /categories/search` to return an array of categories for the given `?res=id`
 - [x] add `GET /categories_resources/search` to return an array of connections for the given `?cat=id`
-- [ ] decide what to do with the duplicates in the categories_resources seed
-- [ ] decide if user_id is needed on `GET /categories/search`
-- [ ] ditto for `GET /categories_resources/search`
-- [ ] communicate to the user that a resource is already liked
+- [x] decide what to do with the duplicates in the categories_resources seed
+- [x] decide if user_id is needed on `GET /categories/search`
+- [x] ditto for `GET /categories_resources/search`
+- [x] add `DELETE /categories` exp `{id: Number}` returns nothing
+- [x] add `{user_name}` to the return value of `POST /comments`
+- [x] add `GET /api/resources/` to returt an array of all resources
 
 ## Edge Cases
 
@@ -62,15 +64,17 @@ Data type is `String` unless stated otherwise. Ellipsis (`...`) indicates that t
 | endpoint                                   | expects                                      | returns                                                                                                                                   |
 | ------------------------------------------ | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `GET /login`                               | `:id: Number`                                | Cookie, redirect                                                                                                                          |
+| `GET /api/resources/`                      | Nothing                                      | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
 | `POST /api/resources`                      | `{url, title, description}`                  | `[{id: Number, user_id: Number, url, title, description, created_at: Timestamp}]`                                                         |
 | `GET /api/resources/search?u`              | `:username: String`                          | `[...{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]` |
 | `GET /api/resources/:id`                   | `:res_id: Number`                            | `[{res_id: Number, auth_id: Number, auth_name, url, title, description, res_timestamp: Timestamp, avg_rating: String, likes: String}]`    |
 | `POST /api/categories`                     | `{name: String}`                             | `[{id: Number, user_id: Number, name}]`                                                                                                   |
 | `GET /api/categories`                      | Cookie                                       | `[...{id: Number, user_id: Number, name}]`                                                                                                |
+| `DELETE /api/categories`                   | `{id: Number}`                               | `204`, nothing                                                                                                                            |
 | `GET /api/categories/search?res`           | `?res_id: Number`                            | `[...{id: Number, user_id: Number, name, res_id: Number}]`                                                                                |
 | `POST /api/categories_resources`           | `{category_id: Number, resource_id: Number}` | `[{id: Number, category_id: Number, resource_id: Number}]`                                                                                |
 | `GET /api/categories_resources/search?cat` | `?cat_id: Number`                            | `[...{id: Number, category_id: Number, resource_id: Number, user_id: Number}]`                                                            |
-| `POST /api/comments`                       | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp}]`                                                    |
+| `POST /api/comments`                       | `{resource_id: Number, content}`             | `[{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                         |
 | `GET /api/comments/search?res`             | `?res_id: Number`                            | `[...{id: Number, user_id: Number, resource_id: Number, content, created_at: Timestamp, user_name}]`                                      |
 | `POST /api/ratings`                        | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |
 | `PUT /api/ratings`                         | `{resource_id: Number, value: Number}`       | `[...{id: Number, user_id: Number, resource_id: Number, value: Number}]`                                                                  |

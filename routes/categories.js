@@ -47,5 +47,15 @@ WHERE resources.id = $1 and categories.user_id = $2
         res.status(500).json({ error: err.message });
       });
   });
+  router.delete("/", (req, res) => {
+    const { user_id } = req.session;
+    const { id } = req.body;
+    db.query("DELETE FROM categories WHERE user_id = $1 AND id = $2", [
+      user_id,
+      id,
+    ])
+      .then(() => res.status(204).end())
+      .catch((e) => res.status(500).json({ error: e.message }));
+  });
   return router;
 };

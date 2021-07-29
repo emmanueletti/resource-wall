@@ -26,6 +26,23 @@ describe("server", () => {
         .expect(200)
         .end(done);
     });
+    it("returns an array of all resources on GET", (done) => {
+      agent
+        .get("/api/resources")
+        .expect(200)
+        .expect((res) => {
+          const s = Object.keys(res.body[0]);
+          if (
+            !Array.isArray(res.body) ||
+            !s.includes("res_id") ||
+            !s.includes("auth_name") ||
+            !s.includes("avg_rating") ||
+            !s.includes("url")
+          )
+            throw new Error("Trouble on GET to /resources");
+        })
+        .end(done);
+    });
     it("returns an array of resources on GET to /search for a given user name, case-insensitive", (done) => {
       agent
         .get("/api/resources/search?u=tEst")
@@ -62,6 +79,9 @@ describe("server", () => {
             throw new Error("Assertion failed");
         })
         .end(done);
+    });
+    it("deletes the category with the given id on DELETE, returns nothing", (done) => {
+      agent.delete("/api/categories").send({ id: 4 }).expect(204, done);
     });
     it("returns an array of categories for the signed-in user on GET", (done) => {
       agent
@@ -121,8 +141,12 @@ describe("server", () => {
         .send({ resource_id: 42, content: "funky" })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].content !== "funky" || res.body[0].user_id !== 1)
-            throw new Error("FAIL");
+          if (
+            res.body[0].content !== "funky" ||
+            res.body[0].user_id !== 1 ||
+            !res.body[0].user_name
+          )
+            throw new Error("Trouble on POST to /api/comments");
         })
         .end(done);
     });
