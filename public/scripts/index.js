@@ -41,13 +41,13 @@ $(document).ready(() => {
     e.preventDefault();
 
     // fake data
-    const data = [
+    const fakeData = [
       { id: 1, name: "Space" },
       { id: 2, name: "Travel" },
       { id: 3, name: "Nature" },
       { id: 4, name: "Vancouver" },
     ];
-    renderManageCategoriesPage(data);
+    renderManageCategoriesPage(fakeData);
   });
 
   // render form to create new resource
@@ -60,6 +60,7 @@ $(document).ready(() => {
   $("#search-user-resources").submit((e) => {
     e.preventDefault();
 
+    const data = $(".nav__search-bar").val();
     // get users categories
     renderSearchedUsersResources(data);
   });

@@ -67,6 +67,12 @@ const buildIndividualResource = (data) => {
       </select>
       <span id="average-rating">??/5 avg</span>
     </div>
+    <div class="resource_category">
+      <select name="category" id="category-select">
+        <option value="">Categorize</option>
+      </select>
+      <span>Category: <span id="resource-category"> None</span></span>
+    </div>
   `;
 
   const resourceCard = document.createElement("div");
@@ -79,6 +85,8 @@ const buildIndividualResource = (data) => {
 
   return resourceCard;
 };
+
+// create function to fill categories with options of all users categories
 
 /**
  * Function build the HTML markup for an individual comment
@@ -156,6 +164,12 @@ const renderResourcePage = (resourceData, commentsData) => {
   // 3 - build comment card with data given
   $(".container").append(buildCommentsSection(commentsData));
 
+  // 4 - update resource current category
+  // get request
+  // if data is empty return
+  // if date is not empty then update front end with new category
+  // $("#resource-category").empty().append(document.createTextNode(data));
+
   // load event listeners
   // create a new comment and refresh comments section with new data
   $(".comments__form").submit((e) => {
@@ -183,4 +197,32 @@ const renderResourcePage = (resourceData, commentsData) => {
   // like resource
 
   // rate resource
+
+  // categories
+  // get users categories from back end
+  const fakeData = [
+    { id: 1, name: "Space" },
+    { id: 2, name: "Travel" },
+    { id: 3, name: "Nature" },
+    { id: 4, name: "Vancouver" },
+  ];
+
+  fakeData.forEach((category) => {
+    const option = document.createElement("option");
+    option.appendChild(document.createTextNode(category.name));
+    option.value = category.name;
+    $("#category-select").append(option);
+  });
+
+  // add event listner to POST categoy change and update front end
+  $("#category-select").change((e) => {
+    const resourceID = $(".resource__info").data("resourceId");
+    const categoryPicked = $("select#category-select option:checked").val();
+    //PUT request to backend
+
+    // update front end with new category
+    $("#resource-category")
+      .empty()
+      .append(document.createTextNode(categoryPicked));
+  });
 };

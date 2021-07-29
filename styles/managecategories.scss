@@ -16,6 +16,9 @@ $secondary-color-accent: rgb(207, 207, 207);
   flex-direction: column;
   align-items: center;
 
+  form {
+    margin-bottom: 1rem;
+  }
   input {
     padding: 1rem;
     border-radius: 5px;
