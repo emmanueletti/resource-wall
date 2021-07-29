@@ -108,6 +108,7 @@ const buildResourceCard = (resource) => {
   // generate random number between 1000 and 2000 so unsplash image is unique for each card
   let imgDimensions = Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000;
   const resourceCardImg = document.createElement("img");
+
   resourceCardImg.setAttribute(
     "src",
     `https://source.unsplash.com/random/${imgDimensions}x${imgDimensions}/?${

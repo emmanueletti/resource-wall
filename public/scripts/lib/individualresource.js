@@ -1,4 +1,5 @@
 timeago.format(new Date());
+const USER_ID = sessionStorage.getItem("userID");
 
 const buildIndividualResource = (data) => {
   const dataObj = data[0];
@@ -54,7 +55,7 @@ const buildIndividualResource = (data) => {
   resourceControls.innerHTML = `
     <div class="resource__like">
       <span id="like-btn" ><i class="fas fa-thumbs-up"></i></span>
-      <span><span id="like-counter">0</span> Likes</span>
+      <span><span id="like-counter">null</span> Likes</span>
     </div>
     <div class="resource__rate">
       <select name="rating" id="rate-select">
@@ -154,8 +155,48 @@ const buildCommentsSection = (data) => {
   return resourceCommentsContainer;
 };
 
+const updateCategoryOptions = () => {
+  $.get("/api/categories")
+    .done((data) => {
+      data.forEach((category) => {
+        $("#category-select").append(createCategoryOption(category));
+      });
+    })
+    .fail((err) => {
+      console.log(err.stack);
+    });
+};
+
+/**
+ * Function gets a resources id and appends the result to the page
+ * @param {Number} resourceID - the resource id
+ */
+const updateLikes = (resourceID) => {
+  $.get(`/api/likes/search?res=${resourceID}`)
+    .done((data) => {
+      // check if logged in user has already liked the resource
+      for (const element of data) {
+        if (element.user_id === Number(USER_ID)) {
+          $("#like-btn").attr("data-user-has-liked", true);
+          $("#like-btn").empty().html(`<i class="fas fa-thumbs-down"></i>`);
+          $("#like-counter")
+            .empty()
+            .append(document.createTextNode(data.length));
+          return;
+        }
+      }
+
+      // update data attr, change like/unlike icon, add like count to HTML
+      $("#like-btn").attr("data-user-has-liked", false);
+      $("#like-btn").empty().html(`<i class="fas fa-thumbs-up"></i>`);
+      $("#like-counter").empty().append(document.createTextNode(data.length));
+    })
+    .fail((err) => {
+      console.log(err.stack);
+    });
+};
+
 const renderResourcePage = (resourceData, commentsData) => {
-  console.log(resourceData);
   // empty pages container
   $(".container").empty();
 
@@ -188,27 +229,10 @@ const renderResourcePage = (resourceData, commentsData) => {
     });
 
   // 5 - update the users category options
-  $.get("/api/categories")
-    .done((data) => {
-      data.forEach((category) => {
-        $("#category-select").append(createCategoryOption(category));
-      });
-    })
-    .fail((err) => {
-      console.log(err.stack);
-    });
+  updateCategoryOptions();
 
   // 6 - update the resources likes
-  // get reqest for resource likes
-  console.log(resID);
-  $.get(`/api/likes/search?res=${resID}`)
-    .done((data) => {
-      if (!data.length) return;
-      $("#like-counter").empty().append(document.createTextNode(data.length));
-    })
-    .fail((err) => {
-      console.log(err.stack);
-    });
+  updateLikes(resID);
 
   // 7 - update the resources ratings
   const avgRating = Number(resourceData[0].avg_rating).toFixed(1);
@@ -216,7 +240,37 @@ const renderResourcePage = (resourceData, commentsData) => {
 };
 
 const mountResourcePageEventListeners = () => {
+  const resID = $(".resource__info").data("resourceId");
   // LIKES
+  $("#like-btn").click(() => {
+    // check if user has liked
+    const hasLiked = document.getElementById("like-btn").dataset.userHasLiked;
+    // if already liked - delete the like on click
+    if (hasLiked === "true") {
+      $.ajax("/api/likes", {
+        data: { resource_id: resID },
+        method: "DELETE",
+      })
+        .done(() => {
+          console.log("UPDATING LIKES");
+          updateLikes(resID);
+        })
+        .fail((err) => {
+          console.log(err.stack);
+        });
+      return;
+    }
+
+    // if not liked yet - create a new like
+    $.post("/api/likes", { resource_id: resID })
+      .done(() => {
+        console.log("UPDATING LIKES");
+        updateLikes(resID);
+      })
+      .fail((err) => {
+        console.log(err.stack);
+      });
+  });
 
   // COMMENTS
   // create a new comment and refresh comments section with new data
@@ -224,10 +278,9 @@ const mountResourcePageEventListeners = () => {
     e.preventDefault();
 
     // create comment
-    const resId = $(".resource__info").data().resourceId;
     const comment = $(`textarea`).val();
     const commentFormData = {
-      resource_id: Number(resId),
+      resource_id: Number(resID),
       content: comment,
     };
 
