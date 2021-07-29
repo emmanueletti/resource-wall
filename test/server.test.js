@@ -63,6 +63,9 @@ describe("server", () => {
         })
         .end(done);
     });
+    it("deletes the category with the given id on DELETE, returns nothing", (done) => {
+      agent.delete("/api/categories").send({ id: 4 }).expect(204, done);
+    });
     it("returns an array of categories for the signed-in user on GET", (done) => {
       agent
         .get("/api/categories")
@@ -121,8 +124,12 @@ describe("server", () => {
         .send({ resource_id: 42, content: "funky" })
         .expect(200)
         .expect((res) => {
-          if (res.body[0].content !== "funky" || res.body[0].user_id !== 1)
-            throw new Error("FAIL");
+          if (
+            res.body[0].content !== "funky" ||
+            res.body[0].user_id !== 1 ||
+            !res.body[0].user_name
+          )
+            throw new Error("Trouble on POST to /api/comments");
         })
         .end(done);
     });
