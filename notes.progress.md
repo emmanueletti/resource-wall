@@ -35,15 +35,7 @@
 
 [ ] write test suite for front end javascript (oops)
 
-[ ] prevent resource creator from liking and rating thier own resource
-
 [ ] have the image pulled from unsplash be related to the category
-
-[ ] clicking the like symbol on a resources card automatically likes the resource and changes the symbol to a filled in heart
-
-[ ] clicking the rating symbol on a resources card takes you to the resources page with the rating section auto focused
-
-[ ] clicking the comment symbol on a resources card takes you to the resources page with the comment section auto focused
 
 [ ] create a button on scroll to bring user back to the top of the page
 
