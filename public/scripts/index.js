@@ -57,13 +57,39 @@ $(document).ready(() => {
     renderNewResourceForm();
   });
 
+  $(".nav__search-bar").focus(() => {
+    $(".container").addClass("background-overlay");
+  });
+  $(".nav__search-bar").focusout(() => {
+    $(".container").removeClass("background-overlay");
+  });
+
   // render resources from search from user
   $("#search-user-resources").submit((e) => {
     e.preventDefault();
-
+    $(".container").removeClass("background-overlay");
     const data = $(".nav__search-bar").val();
     // get users categories
     renderSearchedUsersResources(data);
+  });
+
+  // when user starts to scroll:
+  //  show button to scroll back to the top of the page
+  //  remove button to compose new tweet
+  $(window).on("scroll", function () {
+    const userAtTop = $(this).scrollTop() < 200;
+    console.log($(this).scrollTop());
+    const $scrollBtn = $(".scroll-btn");
+    if (!userAtTop) {
+      $scrollBtn.removeClass("hidden");
+      return;
+    }
+    $scrollBtn.addClass("hidden");
+  });
+
+  // on click: scroll to page top, show tweet form, and focus on textarea
+  $(".scroll-btn").on("click", function () {
+    $(window).scrollTop(0);
   });
 });
 
