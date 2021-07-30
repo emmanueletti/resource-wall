@@ -4,7 +4,8 @@
 insert into ratings (user_id, resource_id, value) values (1, 38, 3);
 insert into ratings (user_id, resource_id, value) values (5, 5, 3);
 insert into ratings (user_id, resource_id, value) values (6, 39, 4);
-insert into ratings (user_id, resource_id, value) values (2, 33, 1);
+insert into ratings (user_id, resource_id, value) values (2, 33, 4);
+insert into ratings (user_id, resource_id, value) values (3, 33, 3);
 insert into ratings (user_id, resource_id, value) values (4, 39, 4);
 insert into ratings (user_id, resource_id, value) values (3, 15, 2);
 insert into ratings (user_id, resource_id, value) values (3, 13, 3);
@@ -46,3 +47,4 @@ insert into ratings (user_id, resource_id, value) values (2, 14, 2);
 insert into ratings (user_id, resource_id, value) values (6, 15, 3);
 insert into ratings (user_id, resource_id, value) values (4, 2, 2);
 insert into ratings (user_id, resource_id, value) values (2, 10, 5);
+

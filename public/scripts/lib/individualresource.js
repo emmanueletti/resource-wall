@@ -178,7 +178,7 @@ const updateLikes = (resourceID) => {
       for (const element of data) {
         if (element.user_id === Number(USER_ID)) {
           $("#like-btn").attr("data-user-has-liked", true);
-          $("#like-btn").empty().html(`<i class="fas fa-thumbs-down"></i>`);
+          $("#like-btn").empty().html(`<i class="fas fa-heart"></i>`);
           $("#like-counter")
             .empty()
             .append(document.createTextNode(data.length));
@@ -188,7 +188,7 @@ const updateLikes = (resourceID) => {
 
       // update data attr, change like/unlike icon, add like count to HTML
       $("#like-btn").attr("data-user-has-liked", false);
-      $("#like-btn").empty().html(`<i class="fas fa-thumbs-up"></i>`);
+      $("#like-btn").empty().html(`<i class="far fa-heart"></i>`);
       $("#like-counter").empty().append(document.createTextNode(data.length));
     })
     .fail((err) => {

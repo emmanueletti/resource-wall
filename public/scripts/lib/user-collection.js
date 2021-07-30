@@ -112,7 +112,7 @@ const buildResourceCard = (resource) => {
   resourceCardImg.setAttribute(
     "src",
     `https://source.unsplash.com/random/${imgDimensions}x${imgDimensions}/?${
-      resource.category || "travel"
+      resource.category || "learning"
     }`
   );
   const resourceCardImgDiv = document.createElement("div");
