@@ -54,7 +54,7 @@ const buildIndividualResource = (data) => {
   resourceControls.className = "resource__controls";
   resourceControls.innerHTML = `
     <div class="resource__like">
-      <span id="like-btn" ><i class="fas fa-thumbs-up"></i></span>
+      <span id="like-btn" >null</span>
       <span><span id="like-counter">null</span> Likes</span>
     </div>
     <div class="resource__rate">
@@ -294,6 +294,7 @@ const mountResourcePageEventListeners = () => {
     $.post("/api/comments", commentFormData)
       .done((data) => {
         // add the newly created comment to the page
+        $("textarea").val("");
         $(".comments__container").prepend(buildIndividualComment(data[0]));
       })
       .fail((err) => {

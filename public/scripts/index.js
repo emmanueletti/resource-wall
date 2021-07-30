@@ -78,7 +78,6 @@ $(document).ready(() => {
   //  remove button to compose new tweet
   $(window).on("scroll", function () {
     const userAtTop = $(this).scrollTop() < 200;
-    console.log($(this).scrollTop());
     const $scrollBtn = $(".scroll-btn");
     if (!userAtTop) {
       $scrollBtn.removeClass("hidden");
